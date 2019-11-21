@@ -14,4 +14,3 @@ app.getToken = $.ajax({
 });
 
 app.getToken;
-
