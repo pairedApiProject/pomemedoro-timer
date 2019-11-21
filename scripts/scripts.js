@@ -12,80 +12,56 @@ app.firebaseConfig = {
     appId: "1:650747741337:web:76dda3ce7fe846137f2408"
 };
 
-
-app.giphy = () => {
-        $.ajax({
-        url: `https://api.giphy.com/v1/gifs/search`,
+app.giphy = (searchTerm = 'pomodoro') => {
+    $.ajax({
+        url: `https://api.giphy.com/v1/gifs/random`,
         method: 'GET',
         dataType: 'json',
         data: {
             api_key: app.apiKey,
-            q: 'animals'
+            tag: searchTerm,
+            rating: 'G',
+            limit: 25
         }
     }).then(result => {
-        console.log(result.data);
 
-    // FOR ARRAY -> OBJECTS
-    const objectArray = result.data;
-
-    const imageArray = objectArray.map((value) => {
-        return value.images['downsized'].url;
-    });
-
-    
-    let randomImage = Math.floor( Math.random() * imageArray.length);
-    let img = imageArray[randomImage];
-    
-    console.log(img);
-    $('.gifContainer').html(`<img src="${img}">`);
-
+        app.filterGif(result.data);    
 })};
 
-app.getGifs = (category) => {
-    $(`button[id=${category}]`).on('submit', event => {
-        event.preventDefault();
-        console.log(this);
+app.appendGif = (bigGif) => {
+    $('.gifContainer').html(`<img src="${bigGif.url}">`);
+};
+
+app.filterGif = (giphyObject) => {
+    const imageWidth = giphyObject.images.original.width;
+    const gif = giphyObject.images.original;
+    
+    if (imageWidth < 360) {
         app.giphy();
-        // $('.gifContainer').html(`<img src="${imageArray}">`);
+    } else {
+        app.appendGif(gif);
+    }
+};
 
-    })
-}
+app.getButtonValue = () => {
+    $("button").on('click', function (e) {
+        e.preventDefault();
 
-$("button").click(function (e) {
-    e.preventDefault();
-    $.ajax({
-        type: "GET",
-        url: `https://api.giphy.com/v1/gifs/search`,
-        data: {
-            q: $(this).val(),
-            api_key: app.apiKey
-        }
+        app.searchTerm = $(this).val();
         
-    }).then(result => {
-        console.log(`success!`, result);
-
-        const objectArray = result.data;
-
-        const imageArray = objectArray.map((value) => {
-            return value.images['downsized'].url;
-        });
-
-        let randomImage = Math.floor(Math.random() * imageArray.length);
-        let img = imageArray[randomImage];
-
-        console.log(img);
-        $('.gifContainer').html(`<img src="${img}">`);
-    })
-});
+        app.giphy(app.searchTerm);
+    });
+};
 
 app.init = () => {
     app.dbRef = firebase.database().ref();
+    // keep this api call here, so gif appears on page load
     app.giphy();
+    app.getButtonValue();
 };
 
 $(document).ready( () => {
     firebase.initializeApp(app.firebaseConfig);
     app.init();
-
 });
 
