@@ -23,36 +23,60 @@ app.giphy = () => {
             q: 'animals'
         }
     }).then(result => {
-        console.log(result);
-
-    // const imageToPush = result.data['fixed_height_downsampled_url'];
-    // console.log(imageToPush);
-
-    // $('.memeContainer').html(`<img src="${imageToPush}">`);
+        console.log(result.data);
 
     // FOR ARRAY -> OBJECTS
     const objectArray = result.data;
 
     const imageArray = objectArray.map((value) => {
         return value.images['downsized'].url;
-    })
+    });
 
-    // const getRandomImage = (imageArray) => {
-    //     let randomImage = Math.floor( Math.random() * imageArray.length);
-    //     let img = imageArray[randomImage];
-    //     let imgStr = '<img src ="' + img + '">';
-    //     $('.memeContainer').html(`<img src="${imageToPush}">`);
-
-    // };  
-    // console.log(resultArray);
-
-
-    })
-};
-
-app.getGifs = () => {
     
+    let randomImage = Math.floor( Math.random() * imageArray.length);
+    let img = imageArray[randomImage];
+    
+    console.log(img);
+    $('.gifContainer').html(`<img src="${img}">`);
+
+})};
+
+app.getGifs = (category) => {
+    $(`button[id=${category}]`).on('submit', event => {
+        event.preventDefault();
+        console.log(this);
+        app.giphy();
+        // $('.gifContainer').html(`<img src="${imageArray}">`);
+
+    })
 }
+
+$("button").click(function (e) {
+    e.preventDefault();
+    $.ajax({
+        type: "GET",
+        url: `https://api.giphy.com/v1/gifs/search`,
+        data: {
+            q: $(this).val(),
+            api_key: app.apiKey
+        }
+        
+    }).then(result => {
+        console.log(`success!`, result);
+
+        const objectArray = result.data;
+
+        const imageArray = objectArray.map((value) => {
+            return value.images['downsized'].url;
+        });
+
+        let randomImage = Math.floor(Math.random() * imageArray.length);
+        let img = imageArray[randomImage];
+
+        console.log(img);
+        $('.gifContainer').html(`<img src="${img}">`);
+    })
+});
 
 app.init = () => {
     app.dbRef = firebase.database().ref();
