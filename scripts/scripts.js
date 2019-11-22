@@ -125,12 +125,61 @@ app.timer = (minutes) => {
 
 };
 
+app.toDoList = () => {
+    $('form').on('submit', function(e) {
+        e.preventDefault();
+
+        if ($('input').val() !== '') {
+            // store what the user typed in a variable
+            const toDoItem = $('input').val();
+
+            $('ul').append("<li> <span class='fa fa-square-o'></span> " + toDoItem + "</li>");
+
+            // create obj that contains toDoItems
+            const toDoObj = {
+              description: toDoItem,
+              completed: false,
+            };
+            // push new object into my database
+            app['dbRef'].push(toDoObj);
+            
+            // clear input
+            $('input').val('');
+        };
+
+        app['dbRef'].on('value', (data) => {
+            const toDoData = data.val();
+            console.log(data.val());
+          
+            const toDoArray = [];
+      
+            for (let property in toDoData) {
+              toDoArray.push(`<li><span class="fa fa-square-o"></span> ${toDoData[property].description}</li>`);
+            };
+      
+            $('ul').empty();
+      
+            toDoArray.forEach(item => {
+                console.log(item);
+              $('ul').append(item);
+            });
+        });
+
+        $('ul').on('click', 'li', function() {
+            const checkBox = $(this).find('.fa');
+            checkBox.toggleClass("fa-square-o fa-check-square-o");
+            $(this).toggleClass("text-muted")
+        });
+    });
+};
+
 app.stopInterval = () => {
     clearInterval(app.timerInterval);
 };
 
 app.init = () => {
     app.dbRef = firebase.database().ref();
+    app.toDoList();
     // keep this api call here, so gif appears on page load
     app.giphy();
     app.getButtonValue();
