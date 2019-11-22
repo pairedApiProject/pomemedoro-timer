@@ -1,8 +1,42 @@
 const app = {};
 
-app.apiKey = 'k7mCxvFuj9fH4f1oknjhDcLF11W7hyhF';
+app.countdown = 0; // variable to set/clear intervals
 
-app.timerInterval = new Date();
+app.seconds = 1500; // seconds left on the clock
+
+app.workTime = 25;
+
+app.breakTime = 5;
+
+app.isBreak = true;
+
+app.isPaused = true;
+
+app.status = $("#status");
+
+app.timerDisplay = $(".timerDisplay");
+
+app.startButton = $("#start");
+
+app.resetButton = $("#reset");
+
+app.workMin = $("#workMin");
+
+app.breakMin = $("#breakMin");
+
+app.alarm = $('#alarm');
+
+app.increment = 5;
+
+app.workPlus = $('#workPlus');
+
+app.breakPlus = $('#breakPlus');
+
+app.workMinus = $('#workMinus');
+
+app.breakMinus = $('#breakMinus');
+
+app.apiKey = 'k7mCxvFuj9fH4f1oknjhDcLF11W7hyhF';
 
 app.firebaseConfig = {
     apiKey: "AIzaSyAZDtWtR2JE52zQWdRGBm0huf5XZ2dEGWI",
@@ -54,76 +88,64 @@ app.getButtonValue = () => {
     });
 };
 
-app.startTimer = () => {
+app.timerLogic = () => {
     
-    $('.timerButtons button').on('click', function(e) {
-        const $buttonId = $(this).val();
-        const $timer = $('#timer');
 
-        e.preventDefault();
-        
-        console.log($buttonId);
+};
 
-        if ($buttonId === 'start') {
-            $timer.text('25:00');
-            app.timer(25);
+/* EVENT LISTENERS FOR START AND RESET BUTTONS */
+app.timerButtons = () => {
+    app.start.on('click', () => {
+        clearInterval(app.countdown);
+        app.isPaused = !app.isPaused;
+        if (!app.isPaused) {
+            app.countdown = setInterval(app.timerButtons, 1000);
         }
+    })
 
-        if ($buttonId === 'shortBreak') {
-            $timer.text('5:00');
-            app.timer(5);
-        }
-        
-        if ($buttonId === 'longBreak') {
-            $timer.text('20:00');
-            app.timer(20);
-        }
-        
-        if ($buttonId === 'stop') {
-            app.stopInterval();
-            $timer.text('25:00');
-        }
+    resetBtn.on('click', () => {
+        clearInterval(app.countdown);
+        app.seconds = app.workTime * 60;
+        app.countdown = 0;
+        app.isPaused = true;
+        app.isBreak = true;
     })
 };
 
-console.log(app.timerInterval.getTime());
-
-app.timer = (minutes) => {
-    let duration = moment.duration({
-        'minutes': minutes,
-        'seconds': 01
-    });
-  
-    const interval = 1;
-    let timer = setInterval(function() {
-        app.timerInterval = new Date().getTime(interval * 1000);
-
-        duration = moment.duration(duration.asSeconds() - interval, 'seconds');
-        let min = duration.minutes();
-        let sec = duration.seconds();
-
-        sec--;
-
-        if (min < 0) {
-            app.stopInterval();
-        }
-        if (min < 10 && min.length !== 2) {
-            min = '0' + min;
-        }
-        if (sec < 0 && min !== 0) {
-            min --;
-            sec = 59;
-        } else if (sec < 10 && sec.length !== 2) {
-            sec = '0' + sec;
-        }
-
-        $('#timer').text(min + ':' + sec);
+/* TIMER - HANDLES COUNTDOWN */
+app.timerCountdown = () => {
+    app.seconds--;
+    if (app.seconds < 0) {
+        clearInterval(app.countdown);
+        // alarm.currentTime = 0;
+        app.alarm.play();
         
-        if (min === 25 && sec === 0)
-            app.stopInterval();
-    }, 1000);
+        if (app.isBreak) {
+            app.seconds = app.breakTime * 60;
+        } else {
+            app.seconds = app.workTime * 60;
+        }
 
+        app.isBreak = !app.isBreak;
+        app.countdown = setInterval(app.timerButtons, 1000);
+    }
 };
+
+let timerIncrement = {
+        "#workPlus": function () { app.workTime = Math.min(app.workTime + app.increment, 60) },
+        "#workMinus": function () { app.workTime = Math.max(app.workTime - app.increment, 5) },
+        "#breakPlus": function () { app.breakTime = Math.min(app.breakTime + app.increment, 60) },
+        "#breakMinus": function () { app.breakTime = Math.max(app.breakTime - app.increment, 5) }};
+
+    for (let key in timerIncrement) {
+        if (timerIncrement.hasOwnProperty(key)) {
+            document.querySelector(key).onclick = timerIncrement[key];
+            console.log(document.querySelector(key).onclick = timerIncrement[key]);
+        }
+};
+
+
+
 
 app.toDoList = () => {
     $('form').on('submit', function(e) {
@@ -173,17 +195,12 @@ app.toDoList = () => {
     });
 };
 
-app.stopInterval = () => {
-    clearInterval(app.timerInterval);
-};
-
 app.init = () => {
     app.dbRef = firebase.database().ref();
     app.toDoList();
     // keep this api call here, so gif appears on page load
     app.giphy();
     app.getButtonValue();
-    app.startTimer();
 };
 
 $(document).ready( () => {

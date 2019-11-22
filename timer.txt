@@ -1,0 +1,74 @@
+// app.startTimer = () => {
+    
+//     $('.timerButtons button').on('click', function(e) {
+//         const $buttonId = $(this).val();
+//         const $timer = $('#timer');
+
+//         e.preventDefault();
+        
+//         console.log($buttonId);
+
+//         if ($buttonId === 'start') {
+//             $timer.text('25:00');
+//             app.timer(25);
+//         }
+
+//         if ($buttonId === 'shortBreak') {
+//             $timer.text('5:00');
+//             app.timer(5);
+//         }
+        
+//         if ($buttonId === 'longBreak') {
+//             $timer.text('20:00');
+//             app.timer(20);
+//         }
+        
+//         if ($buttonId === 'stop') {
+//             app.stopInterval();
+//             $timer.text('25:00');
+//         }
+//     })
+// };
+
+// console.log(app.timerInterval.getTime());
+
+app.timer = (minutes) => {
+    let duration = moment.duration({
+        'minutes': minutes,
+        'seconds': 01
+    });
+  
+    const interval = 1;
+    let timer = setInterval(function() {
+        app.timerInterval = new Date().getTime(interval * 1000);
+
+        duration = moment.duration(duration.asSeconds() - interval, 'seconds');
+        let min = duration.minutes();
+        let sec = duration.seconds();
+
+        sec--;
+
+        if (min < 0) {
+            app.stopInterval();
+        }
+        if (min < 10 && min.length !== 2) {
+            min = '0' + min;
+        }
+        if (sec < 0 && min !== 0) {
+            min --;
+            sec = 59;
+        } else if (sec < 10 && sec.length !== 2) {
+            sec = '0' + sec;
+        }
+
+        $('#timer').text(min + ':' + sec);
+        
+        if (min === 25 && sec === 0)
+            app.stopInterval();
+    }, 1000);
+
+};
+
+app.stopInterval = () => {
+    clearInterval(app.timerInterval);
+};

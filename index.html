@@ -24,13 +24,39 @@
         </ul>
     </section>
     <section>
-        <div id="timer">25:00</div>
+
+        <div class="status"></div>
+        <div class="timerDisplay">25:00</div>
+        <button id="start" class="pomoButton">START</button>
+        
+        <div class="settings">
+
+            <!-- TODO: replace link for local audio clip -->
+            <audio id="alarm" src="https://www.soundjay.com/misc/sounds/bell-ringing-05.mp3" type="audio/mpeg"></audio>            
+            <div id="work">
+                <p>Work Duration</p>
+                <button class="settings" id="workPlus">+</button>
+                <div><span id="workMin">25</span> mins</div>
+                <button class="settings" id="workMinus">-</button>
+            </div>
+
+            <button id="reset" class="pomoButton">RESET</button>
+            
+            <div id="break">
+                <p>Break Duration</p>
+                <button class="settings" id="breakPlus">+</button>
+                <div><span id="breakMin">5</span> mins</div>
+                <button class="settings" id="breakMinus">-</button>
+            </div>
+        </div>
+
+        <!-- <div id="timer">25:00</div>
         <div class="timerButtons">
             <button value="start" id="start">Start</button>
             <button value="shortBreak" id="shortBreak">Short Break</button>
             <button value="longBreak" id="longBreak">Long Break</button>
             <button value="stop" id="stop">Stop</button>
-        </div>
+        </div> -->
     </section>
 
     <section>
@@ -46,8 +72,9 @@
         <div class="gifContainer">
 
         </div>
-
-        <button value="weirder" id="weirder">Get Weirder</button>
+        <div class="buttonContainer">
+            <button value="weirder" id="weirder">Get Weirder</button>
+        </div>
     </section>
 
     <footer>insert footer here</footer>
