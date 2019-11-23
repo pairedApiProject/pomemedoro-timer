@@ -11,9 +11,11 @@ app.breakTime = 5;
 
 app.isBreak = true;
 
+app.canLoadGif = false;
+
 app.isPaused = true;
 
-app.status = $("#status");
+app.status = $(".status");
 
 app.timerDisplay = $(".timerDisplay");
 
@@ -54,7 +56,7 @@ app.firebaseConfig = {
     appId: "1:650747741337:web:76dda3ce7fe846137f2408"
 };
 
-app.giphy = (searchTerm = 'pomodoro') => {
+app.giphy = (searchTerm = 'puppies') => {
     $.ajax({
         url: `https://api.giphy.com/v1/gifs/random`,
         method: 'GET',
@@ -77,10 +79,14 @@ app.filterGif = (giphyObject) => {
     const imageWidth = giphyObject.images.original.width;
     const gif = giphyObject.images.original;
     
-    if (imageWidth < 360) {
+    if (!app.isBreak)   {
+        if (imageWidth < 360) {
         app.giphy();
+        } else {
+            app.appendGif(gif);
+        }
     } else {
-        app.appendGif(gif);
+        $('.gifContainer').empty();
     }
 };
 
@@ -101,8 +107,6 @@ app.toDoList = () => {
         if ($('input').val() !== '') {
             // store what the user typed in a variable
             const toDoItem = $('input').val();
-
-            $('ul').append("<li> <span class='fa fa-square-o'></span> " + toDoItem + "</li>");
 
             // create obj that contains toDoItems
             const toDoObj = {
@@ -129,16 +133,52 @@ app.toDoList = () => {
             $('ul').empty();
       
             toDoArray.forEach(item => {
-                console.log(item);
               $('ul').append(item);
             });
         });
 
-        $('ul').on('click', 'li', function() {
-            const checkBox = $(this).find('.fa');
-            checkBox.toggleClass("fa-square-o fa-check-square-o");
-            $(this).toggleClass("text-muted")
+        
+        
+      
+    });
+};
+
+app.loadPreviousToDoList = () => {
+    app['dbRef'].once('value', (data) => {
+        const toDoData = data.val();
+        console.log(data.val());
+
+        const toDoArray = [];
+
+        for (let property in toDoData) {
+            toDoArray.push(`<li><span class="fa fa-square-o"></span> ${toDoData[property].description}</li>`);
+        };
+
+        toDoArray.forEach(item => {
+            console.log(item);
+            $('ul').append(item);
         });
+    });
+};
+
+app.isToDoComplete = () => {
+    $('ul').on('click', 'li', function () {
+        console.log('it worked');
+        const checkBox = $(this).find('.fa');
+        const selectedKey = $(this).data('key');
+        // creating a reference to the correct node using the previous variable
+        const toDoItemRef = firebase.database().ref(`/${selectedKey}`);
+        // getting snapshot of the appropriate node without listening for changes
+        // toDoItemRef.once('value', (data) => {
+        // grab the data
+        // const targeted = data.val();
+        // update the complete status of the correct to-do
+        // toDoItemRef.update({
+        //     complete: !targeted.complete
+        // })
+        // })
+        checkBox.toggleClass("fa-square-o fa-check-square-o");
+        $(this).toggleClass("text-muted")
     });
 };
 
@@ -151,7 +191,7 @@ app.startTimer = () => {
         console.log("is paused 2: ", app.isPaused);
         if (!app.isPaused) {
             console.log("is paused 3: ", app.isPaused);
-            app.countdown = setInterval(app.timerCountdown, 1000);
+            app.countdown = setInterval(app.timerCountdown, 10);
         }
     })    
 };
@@ -169,12 +209,13 @@ app.resetTimer = () => {
 app.timerCountdown = () => {
     app.seconds--;
 
-    if (app.seconds < 0) {
+    if (app.seconds <= 0) {
         clearInterval(app.countdown);
         // alarm.currentTime = 0;
-        app.alarm.play();
-        app.seconds = (app.isBreak ? app.breakTime : app.workTime) * 60;app.isBreak = !app.isBreak;
-        app.countdown = setInterval(app.timerCountdown(), 1000);
+        // app.alarm.play();
+        app.seconds = (app.isBreak ? app.breakTime : app.workTime) * 60; 
+        app.isBreak = !app.isBreak;
+        app.countdown = setInterval(app.timerCountdown, 10);
     }
 };
 
@@ -225,6 +266,7 @@ app.updateHTML = () => {
     app.countdownDisplay();
     app.buttonDisplay();
     app.isBreak ? app.status.text("Keep Working") : app.status.text("Take a Break!");
+
     app.workMin.text(app.workTime);
     app.breakMin.text(app.breakTime); 
 };
@@ -232,14 +274,16 @@ app.updateHTML = () => {
 
 app.init = () => {
     app.dbRef = firebase.database().ref();
+    app.loadPreviousToDoList();
     app.toDoList();
+    app.isToDoComplete();
     // keep this api call here, so gif appears on page load
-    app.giphy();
     app.updateHTML();
+    app.giphy();
     app.incrementFunctionality();
     app.startTimer();
     app.resetTimer();
-    setInterval(app.updateHTML, 1000);
+    setInterval(app.updateHTML, 10);
 };
 
 $(document).ready( () => {
