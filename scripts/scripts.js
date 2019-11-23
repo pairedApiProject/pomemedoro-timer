@@ -1,7 +1,8 @@
 const app = {};
 
+// properties for timer //
 app.countdown = 0; // variable to set/clear intervals
-
+    
 app.seconds = 1500; // seconds left on the clock
 
 app.workTime = 25;
@@ -38,7 +39,10 @@ app.breakMinus = $('#breakMinus');
 
 app.apiKey = 'k7mCxvFuj9fH4f1oknjhDcLF11W7hyhF';
 
-app.minutes = '';
+app.minutes = 0;
+
+app.remainderSeconds = 0;
+// properties for timer //
 
 app.firebaseConfig = {
     apiKey: "AIzaSyAZDtWtR2JE52zQWdRGBm0huf5XZ2dEGWI",
@@ -90,81 +94,6 @@ app.getButtonValue = () => {
     });
 };
 
-app.timerLogic = () => {
-    
-
-};
-
-/* EVENT LISTENERS FOR START AND RESET BUTTONS */
-app.timerButtons = () => {
-    app.start.on('click', () => {
-        clearInterval(app.countdown);
-        app.isPaused = !app.isPaused;
-        if (!app.isPaused) {
-            app.countdown = setInterval(app.timerButtons, 1000);
-        }
-    })
-
-    resetBtn.on('click', () => {
-        clearInterval(app.countdown);
-        app.seconds = app.workTime * 60;
-        app.countdown = 0;
-        app.isPaused = true;
-        app.isBreak = true;
-    })
-};
-
-/* TIMER - HANDLES COUNTDOWN */
-app.timerCountdown = () => {
-    app.seconds--;
-    if (app.seconds < 0) {
-        clearInterval(app.countdown);
-        // alarm.currentTime = 0;
-        app.alarm.play();
-        
-        if (app.isBreak) {
-            app.seconds = app.breakTime * 60;
-        } else {
-            app.seconds = app.workTime * 60;
-        }
-
-        app.isBreak = !app.isBreak;
-        app.countdown = setInterval(app.timerButtons, 1000);
-    }
-};
-
-app.incrementFunctionality = () => {
-    const incrementFunctions = {
-        workPlus: () => { 
-            app.workTime = Math.min(app.workTime + app.increment, 60);
-        },
-        workMinus: () => {
-            app.workTime = Math.max(app.workTime - app.increment, 5);
-        },
-        breakPlus: function () {
-            app.breakTime = Math.min(app.breakTime + app.increment, 60);
-        },
-        breakMinus: () => {
-            app.breakTime = Math.max(app.breakTime - app.increment, 5);
-        }
-    };
-
-    for (let key in incrementFunctions) {
-        if (incrementFunctions.hasOwnProperty(key)) {
-            console.log("it worked");
-            let buttonId = key.toString();
-            $(`#${key}`).on('click', function() {
-                incrementFunctions[buttonId]();
-            });
-        }
-    }
-}
-app.updateHtml = () => {
-    app.minutes = Math.floor(seconds / 60);
-    remainderSeconds = seconds % 60;
-    timerDisplay.textContent = `${minutes}:${remainderSeconds < 10 ? '0' : ''}${remainderSeconds}`;
-};
-
 app.toDoList = () => {
     $('form').on('submit', function(e) {
         e.preventDefault();
@@ -213,13 +142,104 @@ app.toDoList = () => {
     });
 };
 
+// timer functions //
+app.startTimer = () => {
+    console.log("is paused 1: ", app.isPaused);
+    app.startButton.on('click', () => {
+        clearInterval(app.countdown);
+        app.isPaused = !app.isPaused;
+        console.log("is paused 2: ", app.isPaused);
+        if (!app.isPaused) {
+            console.log("is paused 3: ", app.isPaused);
+            app.countdown = setInterval(app.timerCountdown, 1000);
+        }
+    })    
+};
+
+app.resetTimer = () => {
+    app.resetButton.on('click', () => {
+        clearInterval(app.countdown);
+        app.seconds = app.workTime * 60;
+        app.countdown = 0;
+        app.isPaused = true;
+        app.isBreak = true;
+    })
+};
+
+app.timerCountdown = () => {
+    app.seconds--;
+
+    if (app.seconds < 0) {
+        clearInterval(app.countdown);
+        // alarm.currentTime = 0;
+        app.alarm.play();
+        app.seconds = (app.isBreak ? app.breakTime : app.workTime) * 60;app.isBreak = !app.isBreak;
+        app.countdown = setInterval(app.timerCountdown(), 1000);
+    }
+};
+
+app.incrementFunctionality = () => {
+    const incrementFunctions = {
+        workPlus: () => { 
+            app.workTime = Math.min(app.workTime + app.increment, 60);
+        },
+        workMinus: () => {
+            app.workTime = Math.max(app.workTime - app.increment, 5);
+        },
+        breakPlus: function () {
+            app.breakTime = Math.min(app.breakTime + app.increment, 60);
+        },
+        breakMinus: () => {
+            app.breakTime = Math.max(app.breakTime - app.increment, 5);
+        }
+    };
+
+    for (let key in incrementFunctions) {
+        if (incrementFunctions.hasOwnProperty(key)) {
+            let buttonId = key.toString();
+            $(`#${key}`).on('click', function() {
+                incrementFunctions[buttonId]();
+            });
+        }
+    }
+};
+
+
+app.buttonDisplay = () => {
+    if (app.isPaused && app.countdown === 0) {
+        app.startButton.text("START");
+    } else if (app.isPaused && app.countdown !== 0) {
+        app.startButton.text("Continue"); 
+    } else {
+        app.startButton.text("Pause");
+    }
+};
+
+app.countdownDisplay = () => {
+    app.minutes = Math.floor(app.seconds / 60);
+    app.remainderSeconds = app.seconds % 60;
+    app.timerDisplay.text(`${app.minutes} : ${app.remainderSeconds < 10 ? '0' : ''}${app.remainderSeconds}`);
+};
+
+app.updateHTML = () => {
+    app.countdownDisplay();
+    app.buttonDisplay();
+    app.isBreak ? app.status.text("Keep Working") : app.status.text("Take a Break!");
+    app.workMin.text(app.workTime);
+    app.breakMin.text(app.breakTime); 
+};
+// timer functions //
+
 app.init = () => {
     app.dbRef = firebase.database().ref();
     app.toDoList();
     // keep this api call here, so gif appears on page load
     app.giphy();
-    app.getButtonValue();
+    app.updateHTML();
     app.incrementFunctionality();
+    app.startTimer();
+    app.resetTimer();
+    setInterval(app.updateHTML, 1000);
 };
 
 $(document).ready( () => {
