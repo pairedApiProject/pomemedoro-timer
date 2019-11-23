@@ -38,6 +38,8 @@ app.breakMinus = $('#breakMinus');
 
 app.apiKey = 'k7mCxvFuj9fH4f1oknjhDcLF11W7hyhF';
 
+app.minutes = '';
+
 app.firebaseConfig = {
     apiKey: "AIzaSyAZDtWtR2JE52zQWdRGBm0huf5XZ2dEGWI",
     authDomain: "pomodoroapp-b07bd.firebaseapp.com",
@@ -131,21 +133,37 @@ app.timerCountdown = () => {
     }
 };
 
-let timerIncrement = {
-        "#workPlus": function () { app.workTime = Math.min(app.workTime + app.increment, 60) },
-        "#workMinus": function () { app.workTime = Math.max(app.workTime - app.increment, 5) },
-        "#breakPlus": function () { app.breakTime = Math.min(app.breakTime + app.increment, 60) },
-        "#breakMinus": function () { app.breakTime = Math.max(app.breakTime - app.increment, 5) }};
-
-    for (let key in timerIncrement) {
-        if (timerIncrement.hasOwnProperty(key)) {
-            document.querySelector(key).onclick = timerIncrement[key];
-            console.log(document.querySelector(key).onclick = timerIncrement[key]);
+app.incrementFunctionality = () => {
+    const incrementFunctions = {
+        workPlus: () => { 
+            app.workTime = Math.min(app.workTime + app.increment, 60);
+        },
+        workMinus: () => {
+            app.workTime = Math.max(app.workTime - app.increment, 5);
+        },
+        breakPlus: function () {
+            app.breakTime = Math.min(app.breakTime + app.increment, 60);
+        },
+        breakMinus: () => {
+            app.breakTime = Math.max(app.breakTime - app.increment, 5);
         }
+    };
+
+    for (let key in incrementFunctions) {
+        if (incrementFunctions.hasOwnProperty(key)) {
+            console.log("it worked");
+            let buttonId = key.toString();
+            $(`#${key}`).on('click', function() {
+                incrementFunctions[buttonId]();
+            });
+        }
+    }
+}
+app.updateHtml = () => {
+    app.minutes = Math.floor(seconds / 60);
+    remainderSeconds = seconds % 60;
+    timerDisplay.textContent = `${minutes}:${remainderSeconds < 10 ? '0' : ''}${remainderSeconds}`;
 };
-
-
-
 
 app.toDoList = () => {
     $('form').on('submit', function(e) {
@@ -201,6 +219,7 @@ app.init = () => {
     // keep this api call here, so gif appears on page load
     app.giphy();
     app.getButtonValue();
+    app.incrementFunctionality();
 };
 
 $(document).ready( () => {
