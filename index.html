@@ -5,24 +5,37 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <script src="https://kit.fontawesome.com/df92119142.js" crossorigin="anonymous"></script>
-    <title>Meme Roulette</title>
+    <title>Pomemedoro Technique</title>
 </head>
 <body>
 
     <header>
-        <h1>GIF Roulette</h1>
+        <h1>Pomemedoro Technique</h1>
     </header>
     <section>
-        <p>insert description text here</p>
+        <details>
+            <summary>Instructions on How to Use the Pomemedoro Technique</summary>
+            <p>
+            	<ol>
+            	    <li>Choose a task you would like to work on.</li>
+            	    <li>Set the timer for how long you would like to work on the task (the default is 25 minutes). You can increase or decrease the time by clicking on the plus and minus buttons under Work Duration. Press RESET to update the timer.</li>
+            	    <li>Press the START button.</li>
+            	    <li>Work on the task continuously until the alarm rings.</li>
+            	    <li>Take a 5 minute break. Congratulations, you've completed one pomodoro!</li>
+            	    <li>When your break is over the timer will start counting down another work duration.</li>
+            	    <li>After completing four pomodoros (steps 4 and 5), take a longer break (15 - 30 minutes), then start again from step 4.</li>
+            	    <li>Once you've completed your task, check it off.</li>
+            	</ol>
+            </p>
+        </details>
     </section>
     <section>
         <form>
-            <input class="form-control" type="text" placeholder="Add an item...">
+            <label for="userTask">What task do you want to complete?</label>
+            <input class="" type="text" id="userTask" placeholder="Write task here">
         </form>
-    
-        <ul>
-        <!-- To do items get added dynamically here -->
-        </ul>
+        <!-- Empty ul to append tasks -->
+        <ul></ul>
     </section>
     <section>
 
@@ -31,13 +44,14 @@
         <button id="start" class="pomoButton">START</button>
         
         <div class="settings">
-
-            <!-- TODO: replace link for local audio clip -->
-            <audio id="alarm" src="https://www.soundjay.com/misc/sounds/bell-ringing-05.mp3" type="audio/mpeg"></audio>            
+            <audio id="alarm" controls>
+                <source src="assets/alarm.mp3" type="audio/mpeg">
+            </audio>         
+            
             <div id="work">
                 <p>Work Duration</p>
                 <button class="settings" id="workPlus">+</button>
-                <div><span id="workMin">25</span> mins</div>
+                <div><span id="workMin">25</span> minutes</div>
                 <button class="settings" id="workMinus">-</button>
             </div>
 
@@ -46,18 +60,10 @@
             <div id="break">
                 <p>Break Duration</p>
                 <button class="settings" id="breakPlus">+</button>
-                <div><span id="breakMin">5</span> mins</div>
+                <div><span id="breakMin">5</span> minutes</div>
                 <button class="settings" id="breakMinus">-</button>
             </div>
         </div>
-
-        <!-- <div id="timer">25:00</div>
-        <div class="timerButtons">
-            <button value="start" id="start">Start</button>
-            <button value="shortBreak" id="shortBreak">Short Break</button>
-            <button value="longBreak" id="longBreak">Long Break</button>
-            <button value="stop" id="stop">Stop</button>
-        </div> -->
     </section>
 
     <section>
@@ -69,20 +75,20 @@
             <button value="chaos" id="chaos">chaos</button>
             <button value="internet" id="internet">internet</button>
         </div>
-
-        <div class="gifContainer">
-
-        </div>
+        <!-- empty div to append gifs -->
+        <div class="gifContainer"></div>
         <div class="buttonContainer">
             <button value="weirder" id="weirder">Get Weirder</button>
         </div>
     </section>
 
-    <footer>insert footer here</footer>
+    <footer><p class="footer">Timer code by <a href="https://www.cynthialee.io" target="_blank">Cynthia Lee</a></p>
+    <p>Alarm sound from <a href="http://soundbible.com/2160-Old-Fashion-Door-Bell.html">Sound Bible</a>, recorded by Daniel Simion</p></footer>
+
     <script src="https://www.gstatic.com/firebasejs/7.4.0/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/7.4.0/firebase-database.js"></script>
     <script src="scripts/moment.min.js"></script>
-    <script src='https://code.jquery.com/jquery-3.4.1.js'integrity='sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU='crossorigin='anonymous'></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.js" integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
     <script src="scripts/scripts.js"></script>
 </body>
 </html>
