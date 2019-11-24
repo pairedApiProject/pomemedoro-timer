@@ -1,1 +1,23 @@
-// MIXIN STYLES GO IN HERE (IF APPLICABLE)
+@mixin mq-mobile {
+    @media (min-width: 320px) {
+        @content;
+    }
+}
+
+@mixin mq-tablet {
+    @media (min-width: 768px) {
+        @content;
+    }
+}
+
+@mixin mq-desktop {
+    @media (min-width: 1080px) {
+        @content;
+    }
+}
+
+@mixin mq-retina {
+    @media (min-width: 2000px) {
+        @content;
+    }
+}
