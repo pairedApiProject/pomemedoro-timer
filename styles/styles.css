@@ -1,21 +1,51 @@
+html {
+  font-size: 62.5%;
+}
+
+body {
+  font-family: 'Oswald', sans-serif;
+  background: #362f36;
+  color: #ecf0f1;
+  font-size: 2rem;
+}
+
 h1, ul, li, body, button {
   margin: 0;
   padding: 0;
   border: none;
 }
 
-button {
+.buttonContainer button {
   text-transform: uppercase;
-  padding: 5px 10px;
+  padding: 7px 12px;
   border-radius: 15px;
   background: #362f36;
   color: #ecf0f1;
   border: 2px solid #ecf0f1;
+  cursor: pointer;
+  font-size: 2rem;
 }
 
-body {
-  font-family: 'Oswald', sans-serif;
-  background: #362f36;
+input {
+  background-color: #362f36;
+  border: none;
+  color: #ecf0f1;
+  font-size: 2rem;
+}
+
+input::-webkit-input-placeholder {
+  color: #ecf0f1;
+}
+
+input:-ms-input-placeholder {
+  color: #ecf0f1;
+}
+
+input::-ms-input-placeholder {
+  color: #ecf0f1;
+}
+
+input::placeholder {
   color: #ecf0f1;
 }
 
@@ -31,4 +61,45 @@ header, body {
 
 ul {
   list-style: none;
+}
+
+.timerSettings {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -ms-flex-line-pack: center;
+      align-content: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.timerSettings button {
+  text-transform: uppercase;
+  padding: 7px 12px;
+  border-radius: 15px;
+  background: #362f36;
+  color: #ecf0f1;
+  border: 2px solid #ecf0f1;
+  cursor: pointer;
+  font-size: 2rem;
+}
+
+.timerSettings button.pomoButtonStart {
+  background-color: green;
+}
+
+.timerSettings button.pomoButtonReset {
+  background-color: red;
+}
+
+.timerSettings span {
+  font-size: 3rem;
+}
+
+.timerSettings .min {
+  font-family: 'Rajdhani', sans-serif;
 }

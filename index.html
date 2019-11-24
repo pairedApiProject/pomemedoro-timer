@@ -5,80 +5,82 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <script src="https://kit.fontawesome.com/df92119142.js" crossorigin="anonymous"></script>
-    <link href="https://fonts.googleapis.com/css?family=Oswald:400,600,700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Oswald:400,600|Rajdhani:500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles/styles.css">
     <title>Meme Roulette</title>
 </head>
 <body>
-
-    <header>
-        <h1>POMEMEDORO</h1>
-    </header>
-    <section>
-        <p>insert description text here</p>
-    </section>
-    <section>
-        <form>
-            <input class="form-control" type="text" placeholder="Add an item...">
-        </form>
-    
-        <ul>
-        <!-- To do items get added dynamically here -->
-        </ul>
-    </section>
-    <section>
-
-        <div class="status"></div>
-        <div class="timerDisplay">25:00</div>
-        <button id="start" class="pomoButton">START</button>
+    <div class="wrapper">
+        <header>
+            <h1>POMEMEDORO</h1>
+        </header>
+        <section>
+            <p>insert description text here</p>
+        </section>
+        <section>
+            <form>
+                <input class="form-control" type="text" placeholder="Add an item...">
+            </form>
         
-        <div class="settings">
+            <ul>
+            <!-- To do items get added dynamically here -->
+            </ul>
+        </section>
+        <section>
+            <div class="timerSettings">
+                
+                
+                <div class="settings">
 
-            <!-- TODO: replace link for local audio clip -->
-            <audio id="alarm" src="https://www.soundjay.com/misc/sounds/bell-ringing-05.mp3" type="audio/mpeg"></audio>            
-            <div id="work">
-                <p>Work Duration</p>
-                <button class="settings" id="workPlus">+</button>
-                <div><span id="workMin">25</span> mins</div>
-                <button class="settings" id="workMinus">-</button>
+                    <!-- TODO: replace link for local audio clip -->
+                    <audio id="alarm" src="https://www.soundjay.com/misc/sounds/bell-ringing-05.mp3" type="audio/mpeg"></audio>            
+                    <div id="work">
+                        <p>Work Duration</p>
+                        <button class="settings" id="workPlus">+</button>
+                        <div><span class="min" id="workMin">25</span> mins</div>
+                        <button class="settings" id="workMinus">-</button>
+                    </div>
+
+                </div>
+
+                <div class="pomoStart">
+                    <div class="status"></div>
+                    <div class="min timerDisplay">25:00</div>
+                    <button id="start" class="pomoButtonStart">START</button>
+                    <button id="reset" class="pomoButtonReset">RESET</button>
+                
+                </div>
+
+                <div class="breakSettings">
+                    
+                    <div id="break">
+                        <p>Break Duration</p>
+                        <button class="settings" id="breakPlus">+</button>
+                        <div><span class="min" id="breakMin">5</span> mins</div>
+                        <button class="settings" id="breakMinus">-</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <div class="buttonContainer">
+                <button value="kitten" id="kitten">Kitties</button>
+                <button value="puppy" id="puppies">Puppies</button>
+                <button value="coding" id="coding">coding</button>
+                <button value="impeach" id="impeach">impeach</button>
+                <button value="chaos" id="chaos">chaos</button>
+                <button value="internet" id="internet">internet</button>
             </div>
 
-            <button id="reset" class="pomoButton">RESET</button>
-            
-            <div id="break">
-                <p>Break Duration</p>
-                <button class="settings" id="breakPlus">+</button>
-                <div><span id="breakMin">5</span> mins</div>
-                <button class="settings" id="breakMinus">-</button>
+            <div class="gifContainer">
+
             </div>
-        </div>
-
-        <!-- <div id="timer">25:00</div>
-        <div class="timerButtons">
-            <button value="start" id="start">Start</button>
-            <button value="shortBreak" id="shortBreak">Short Break</button>
-            <button value="longBreak" id="longBreak">Long Break</button>
-            <button value="stop" id="stop">Stop</button>
-        </div> -->
-    </section>
-
-    <section>
-        <div class="buttonContainer">
-            <button value="kitten" id="kitten">Kitties</button>
-            <button value="puppy" id="puppies">Puppies</button>
-            <button value="coding" id="coding">coding</button>
-            <button value="impeach" id="impeach">impeach</button>
-            <button value="chaos" id="chaos">chaos</button>
-            <button value="internet" id="internet">internet</button>
-        </div>
-
-        <div class="gifContainer">
-
-        </div>
-        <div class="buttonContainer">
-            <button value="weirder" id="weirder">Get Weirder</button>
-        </div>
-    </section>
+            <div class="buttonContainer">
+                <button value="weirder" id="weirder">Get Weirder</button>
+            </div>
+        </section>
+    </div>
 
     <footer>insert footer here</footer>
     <script src="https://www.gstatic.com/firebasejs/7.4.0/firebase-app.js"></script>

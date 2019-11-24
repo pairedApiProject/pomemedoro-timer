@@ -4,3 +4,37 @@
 
 // https://i2.wp.com/www.cssscript.com/wp-content/uploads/2017/08/Circular-Countdown-Timer-In-JavaScript-And-CSS3.png?fit=445%2C325&ssl=1
 
+.timerSettings {
+    display: flex;
+    align-items: center;
+    align-content: center;
+    justify-content: center;
+
+    button {
+        text-transform: uppercase;
+        padding: 7px 12px;
+        border-radius: 15px;
+        background: #362f36;
+        color: #ecf0f1;
+        border: 2px solid #ecf0f1;
+        cursor: pointer;
+        font-size: 2rem;
+
+        &.pomoButtonStart {
+            background-color: green;
+        }
+
+        &.pomoButtonReset {
+            background-color: red;
+
+        }
+    }
+
+    span {
+        font-size: 3rem;
+    }
+    
+    .min {
+        font-family: 'Rajdhani', sans-serif;
+    }
+}

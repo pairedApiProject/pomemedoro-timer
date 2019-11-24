@@ -1,7 +1,24 @@
 // BASE STYLES GO IN HERE
 
 
-// remove margin and padding for h1, ul, li 
+$primaryColor: #ecf0f1;
+$secondaryColor: #362f36;
+
+html {
+    font-size: 62.5%;
+}
+
+body {
+    font-family: 'Oswald', sans-serif;
+    background: $secondaryColor;
+    color: $primaryColor;
+    font-size: 2rem;
+}
+
+
+
+// remove default margin and padding for h1, ul, li 
+
 
 h1, ul, li, body, button {
     margin: 0;
@@ -9,20 +26,32 @@ h1, ul, li, body, button {
     border: none;
 }
 
-button {
-    text-transform: uppercase;
-    padding: 5px 10px;
-    border-radius: 15px;
-    background: #362f36;
-    color: #ecf0f1;
-    border: 2px solid #ecf0f1;
+.buttonContainer {
+    button{
+        text-transform: uppercase;
+        padding: 7px 12px;
+        border-radius: 15px;
+        background: #362f36;
+        color: #ecf0f1;
+        border: 2px solid #ecf0f1;
+        cursor: pointer;
+        font-size: 2rem;
+    }
 }
 
-body {
-    font-family: 'Oswald', sans-serif;
-    background: #362f36;
-    color: #ecf0f1;
+input {
+    background-color: $secondaryColor;
+    border: none;
+    color: $primaryColor;
+    font-size: 2rem;
+
+
+    &::placeholder {
+        color: $primaryColor;
+    }
 }
+
+
 
 .wrapper {
     max-width: 1080px;
