@@ -1,1 +1,39 @@
 // BASE STYLES GO IN HERE
+
+
+// remove margin and padding for h1, ul, li 
+
+h1, ul, li, body, button {
+    margin: 0;
+    padding: 0;
+    border: none;
+}
+
+button {
+    text-transform: uppercase;
+    padding: 5px 10px;
+    border-radius: 15px;
+    background: #362f36;
+    color: #ecf0f1;
+    border: 2px solid #ecf0f1;
+}
+
+body {
+    font-family: 'Oswald', sans-serif;
+    background: #362f36;
+    color: #ecf0f1;
+}
+
+.wrapper {
+    max-width: 1080px;
+    width: 80%;
+    margin: 0 auto;
+}
+
+header, body {
+    text-align: center;
+}
+
+ul {
+    list-style: none;
+}

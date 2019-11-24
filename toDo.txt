@@ -1,3 +1,13 @@
+add instructions to main page - can click button on top right side to show it (toggle button)
+
+remove to do items once they are checked / change color to grey.
+
+keep checked items as checked
+
+add 
+
+misc timer text below: 
+
 // app.startTimer = () => {
     
 //     $('.timerButtons button').on('click', function(e) {
