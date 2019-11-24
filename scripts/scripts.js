@@ -9,7 +9,7 @@ app.workTime = 25;
 
 app.breakTime = 5;
 
-app.isBreak = true;
+app.isWorkTime = true;
 
 app.isPaused = true;
 
@@ -200,17 +200,17 @@ app.resetTimer = () => {
         app.seconds = app.workTime * 60;
         app.countdown = 0;
         app.isPaused = true;
-        app.isBreak = true;
+        app.isWorkTime = true;
     })
 };
 
 app.toggleGifAndButtons = () => {
-    if (app.isBreak) {
+    if (app.isWorkTime) {
         app.gifButtons.toggle();
         $('.gifContainer').empty();
     }
 
-    if (!(app.isBreak)) {
+    if (!(app.isWorkTime)) {
         app.gifButtons.toggle();
         app.callGiphyAPI();
     }
@@ -223,8 +223,8 @@ app.timerCountdown = () => {
         alarm.play();
         app.alarm.currentTime = 0;
         clearInterval(app.countdown);
-        app.seconds = (app.isBreak ? app.breakTime : app.workTime) * 60;
-        app.isBreak = !(app.isBreak);
+        app.seconds = (app.isWorkTime ? app.breakTime : app.workTime) * 60;
+        app.isWorkTime = !(app.isWorkTime);
         app.countdown = setInterval(app.timerCountdown, 1000);
         app.toggleGifAndButtons();
     }
@@ -276,7 +276,7 @@ app.countdownDisplay = () => {
 app.updateTimerHTML = () => {
     app.countdownDisplay();
     app.buttonDisplay();
-    app.isBreak ? app.status.text("Keep Working") : app.status.text("Take a Break!");
+    app.isWorkTime ? app.status.text("Keep Working") : app.status.text("Take a Break!");
     app.workMin.text(app.workTime);
     app.breakMin.text(app.breakTime); 
 };
