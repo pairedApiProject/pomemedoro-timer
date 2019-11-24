@@ -15,7 +15,14 @@ body {
     font-size: 2rem;
 }
 
+audio {
+    display: none;
+}
 
+a {
+    text-decoration: none;
+    color: inherit;
+}
 
 // remove default margin and padding for h1, ul, li 
 
@@ -27,6 +34,7 @@ h1, ul, li, body, button {
 }
 
 .buttonContainer {
+
     button{
         text-transform: uppercase;
         padding: 7px 12px;
@@ -36,6 +44,7 @@ h1, ul, li, body, button {
         border: 2px solid #ecf0f1;
         cursor: pointer;
         font-size: 2rem;
+        margin-top: 50px;
     }
 }
 
@@ -66,3 +75,8 @@ header, body {
 ul {
     list-style: none;
 }
+
+footer {
+    background: black;
+}
+

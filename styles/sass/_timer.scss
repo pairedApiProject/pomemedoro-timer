@@ -9,16 +9,21 @@
     align-items: center;
     align-content: center;
     justify-content: center;
+    margin: 50px 0;
 
     button {
         text-transform: uppercase;
-        padding: 7px 12px;
-        border-radius: 15px;
+        padding: 0 1.25rem;
+        border-radius: 40px;
         background: #362f36;
         color: #ecf0f1;
         border: 2px solid #ecf0f1;
         cursor: pointer;
-        font-size: 2rem;
+        font-size: 2.5rem;
+        &:hover {
+            background-color: $primaryColor;
+            color: $secondaryColor;
+        }
 
         &.pomoButtonStart {
             background-color: green;
