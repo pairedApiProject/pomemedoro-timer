@@ -95,19 +95,28 @@ app.listenForGifTag = () => {
     });
 };
 
+app.insertErrorMessage = () => {
+    const $errorMessage = "<p class=\"error\" role=\"alert\" tabindex=\"0\">You can only have 5 tasks to complete at a time. Please mark one as complete to remove it from the list</p>";
+
+    $('label[for=userTask]').after($errorMessage);
+};
+
 app.userTaskList = () => {
     $('form').on('submit', function(e) {
         e.preventDefault();
 
         if ($('input').val() !== '') {
             const task = $('input').val();
-            const taskObjec = {
-              description: task,
-              completed: false,
+            const taskObject = {
+              description: task
             };
 
-            app['dbRef'].push(taskObjec);
-            
+            if ($('ul').children().length <= 5) {
+                app.newTask = app.dbOnly.ref('tasks').push(taskObject);
+            } else {
+                app.insertErrorMessage();
+            }
+
             $('input').val('');
         };
 
@@ -116,38 +125,38 @@ app.userTaskList = () => {
 };
 
 app.appendNewTasksFromFirebase = () => {
-    app['dbRef'].on('value', (data) => {
+    const userRefForNewTasks = app.dbOnly.ref('tasks');
+
+    userRefForNewTasks.on('value', (data) => {
         const userTaskData = data.val();
         const userTaskArray = [];
-  
+
         for (let userTask in userTaskData) {
-          userTaskArray.push(`<li><span class='fa fa-square-o'></span>${userTaskData[userTask].description}</li>`);
+          userTaskArray.push(`<li data-key=${userTask}><span class='fa fa-square-o'></span>${userTaskData[userTask].description}</li>`);
         };
-  
+
         $('ul').empty();
   
-        if ($('ul').children().length <= 5) {
-            userTaskArray.forEach(task => {
-                $('ul').append(task);
-            }); 
-        }
+        userTaskArray.forEach(task => {
+            $('ul').append(task);
+        });
     });
 };
 
-app.appendTasksFromFireBase = () => {
-    app['dbRef'].once('value', (data) => {
+app.appendExistingTasksFromFireBase = () => {
+    const userRefForExistingTasks = app.dbOnly.ref('tasks');
+
+    userRefForExistingTasks.once('value', (data) => {
         const userTaskData = data.val();
         const userTaskArray = [];
-  
+
         for (let userTask in userTaskData) {
-          userTaskArray.push(`<li><span class='fa fa-square-o'></span>${userTaskData[userTask].description}</li>`);
+            userTaskArray.push(`<li data-key=${userTask}><span class='fa fa-square-o'></span>${userTaskData[userTask].description}</li>`);
         };
-  
-        if ($('ul').children().length <= 5) {
-            userTaskArray.forEach(task => {
-                $('ul').append(task);
-            }); 
-        }
+
+        userTaskArray.forEach(task => {
+            $('ul').append(task);
+        }); 
     });
 };
 
@@ -159,7 +168,10 @@ app.taskClickListener  = () => {
         $(this).toggleClass('taskComplete');
 
         if ($(this).hasClass('taskComplete')) {
+            const $dataKey = $(this).attr('data-key');
+
             $(this).remove();
+            app.dbOnly.ref(`tasks/${$dataKey}`).remove();
         }
     });
 };
@@ -264,11 +276,12 @@ app.updateTimerHTML = () => {
 // end of timer functions //
 
 app.init = () => {
+    app.hideGifButtons();
     app.dbRef = firebase.database().ref();
+    app.dbOnly = firebase.database();
+    app.appendExistingTasksFromFireBase();
     app.userTaskList();
     app.taskClickListener();
-    app.appendTasksFromFireBase();
-    app.hideGifButtons();
     app.listenForGifTag();
     app.updateTimerHTML();
     app.incrementFunctionality();
