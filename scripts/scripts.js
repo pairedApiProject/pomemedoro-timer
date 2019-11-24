@@ -13,7 +13,7 @@ app.isBreak = true;
 
 app.isPaused = true;
 
-app.status = $('#status');
+app.status = $('.status');
 
 app.timerDisplay = $('.timerDisplay');
 
@@ -37,6 +37,8 @@ app.workMinus = $('#workMinus');
 
 app.breakMinus = $('#breakMinus');
 
+app.gifButtons = $('.buttonContainer button');
+
 app.apiKey = 'k7mCxvFuj9fH4f1oknjhDcLF11W7hyhF';
 
 app.minutes = 0;
@@ -54,7 +56,7 @@ app.firebaseConfig = {
     appId: '1:650747741337:web:76dda3ce7fe846137f2408'
 };
 
-app.callGiphyAPI = (searchTerm = "break") => {
+app.callGiphyAPI = searchTerm => {
     $.ajax({
         url: `https://api.giphy.com/v1/gifs/random`,
         method: 'GET',
@@ -86,7 +88,7 @@ app.filterGif = (gifObject) => {
 };
 
 app.listenForGifTag = () => {
-    $('.buttonContainer button').on('click', function(e) {
+    app.gifButtons.on('click', function(e) {
         e.preventDefault();
 
         app.searchTerm = $(this).val();
@@ -111,7 +113,7 @@ app.userTaskList = () => {
               description: task
             };
 
-            if ($('ul').children().length <= 5) {
+            if ($('ul').children().length <= 4) {
                 app.newTask = app.dbOnly.ref('tasks').push(taskObject);
             } else {
                 app.insertErrorMessage();
@@ -136,10 +138,12 @@ app.appendNewTasksFromFirebase = () => {
         };
 
         $('ul').empty();
-  
-        userTaskArray.forEach(task => {
-            $('ul').append(task);
-        });
+
+        if ($('ul').children().length <= 4) {
+            userTaskArray.forEach(task => {
+                $('ul').append(task);
+            });
+        }
     });
 };
 
@@ -200,9 +204,15 @@ app.resetTimer = () => {
     })
 };
 
-app.hideGifButtons = () => {
-    if ($('.gifContainer').val() === "") {
-        $('.buttonContainer').hide();
+app.toggleGifAndButtons = () => {
+    if (app.isBreak) {
+        app.gifButtons.toggle();
+        $('.gifContainer').empty();
+    }
+
+    if (!(app.isBreak)) {
+        app.gifButtons.toggle();
+        app.callGiphyAPI();
     }
 };
 
@@ -210,16 +220,13 @@ app.timerCountdown = () => {
     app.seconds--;
 
     if (app.seconds <= 0) {
-        clearInterval(app.countdown);
-        
-        app.alarm.currentTime = 0;
         alarm.play();
+        app.alarm.currentTime = 0;
+        clearInterval(app.countdown);
         app.seconds = (app.isBreak ? app.breakTime : app.workTime) * 60;
         app.isBreak = !(app.isBreak);
-        if (app.isBreak == true) {
-            app.callGiphyAPI();
-        }
-        app.countdown = setInterval(app.timerCountdown(), 1000);
+        app.countdown = setInterval(app.timerCountdown, 1000);
+        app.toggleGifAndButtons();
     }
 };
 
@@ -276,7 +283,6 @@ app.updateTimerHTML = () => {
 // end of timer functions //
 
 app.init = () => {
-    app.hideGifButtons();
     app.dbRef = firebase.database().ref();
     app.dbOnly = firebase.database();
     app.appendExistingTasksFromFireBase();
@@ -287,7 +293,8 @@ app.init = () => {
     app.incrementFunctionality();
     app.startTimer();
     app.resetTimer();
-    setInterval(app.updateHTML, 1000);
+    app.gifButtons.toggle();
+    setInterval(app.updateTimerHTML, 1000);
 };
 
 $(document).ready( () => {
