@@ -22,10 +22,22 @@
 
         &.pomoButtonStart {
             background-color: green;
+
+            &:hover {
+                background-color: lighten(green, 70%);
+                color: darken($primaryColor, 70%);
+                border: 2px solid darken($primaryColor, 70%);
+            }
         }
 
         &.pomoButtonReset {
             background-color: red;
+
+            &:hover {
+                background-color: lighten(red, 70%);
+                color: darken(red, 70%);
+                border: 2px solid darken(red, 70%);
+            }
 
         }
     }

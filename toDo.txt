@@ -1,10 +1,7 @@
-add instructions to main page - can click button on top right side to show it (toggle button)
-
-remove to do items once they are checked / change color to grey.
 
 keep checked items as checked
 
-add 
+add hover/focus in css
 
 misc timer text below: 
 

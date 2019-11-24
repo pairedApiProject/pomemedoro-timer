@@ -92,8 +92,20 @@ ul {
   background-color: green;
 }
 
+.timerSettings button.pomoButtonStart:hover {
+  background-color: #e6ffe6;
+  color: #334145;
+  border: 2px solid #334145;
+}
+
 .timerSettings button.pomoButtonReset {
   background-color: red;
+}
+
+.timerSettings button.pomoButtonReset:hover {
+  background-color: white;
+  color: black;
+  border: 2px solid black;
 }
 
 .timerSettings span {
