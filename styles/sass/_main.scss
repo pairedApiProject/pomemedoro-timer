@@ -1,19 +1,10 @@
-// BASE/MAIN STYLES GO IN HERE
-
-// To-do - rename this sass file?
-
-
 $primaryColor: #ecf0f1;
 $secondaryColor: #362f36;
 $errorMessageBackground: #FF0000;
 
-// change secondary color based on background
-
 html {
     font-size: 62.5%;
 }
-
-// remove default margin and padding for h1, ul, li 
 
 h1, ul, li, body, button, ol, p {
     margin: 0;
@@ -21,23 +12,8 @@ h1, ul, li, body, button, ol, p {
     border: none;
 }
 
-.wrapper {
-
-    @include mq-mobile {
-        width: 95%;
-        margin: 0 auto;
-    }
-
-    @include mq-tablet {
-        width: 90%;
-        margin: 0 auto;
-    }
-
-    @include mq-desktop {
-        max-width: 1080px;
-        width: 80%;
-        margin: 0 auto;
-    }
+header, body {
+    text-align: center;
 }
 
 body {
@@ -51,26 +27,23 @@ body {
     animation: backgroundGradient 10s ease infinite;
 }
 
-.tasksToComplete {
-    padding: 20px;
-}
-
-@keyframes backgroundGradient {
-	0% {
-		background-position: 0% 50%;
-	}
-	50% {
-		background-position: 100% 50%;
-	}
-	100% {
-		background-position: 0% 50%;
-	}
-}
-
 header {
-
     h1 {
-        padding: 30px 0;
+        @include mq-mobile {
+            padding: 30px 0;
+            img {
+                display: none;
+            }
+        }
+        @include mq-tablet {
+            .secondTomato {
+                transform: translateX(25%) translateY(15%);
+            }
+            img {
+                display: inline-block;
+                transform: translateX(-25%) translateY(15%);
+            }
+        }
     }
 }
 
@@ -83,38 +56,8 @@ a {
     color: inherit;
 }
 
-.buttonContainer {
-
-    button{
-        text-transform: uppercase;
-        padding: 7px 12px;
-        border-radius: 15px;
-        background: inherit;
-        color: $primaryColor;
-        border: 2px solid $primaryColor;
-        cursor: pointer;
-        font-size: 2rem;
-        margin: 10px 5px;
-
-        &:hover, &:focus {
-            background: $primaryColor;
-            color: $secondaryColor;
-        }
-    }
-}
-
-.error {
-    animation: sweep .5s ease-in-out;
-    border: 2px solid #ecf0f1;
-    border-radius: 10px;
-    padding: 10px;
-    margin: 15px 0;
-    background: darken($errorMessageBackground, 20%);
-}
-
-.gifContainer {
-    height: auto;
-    margin: 20px 0;
+label {
+    word-break: break-all;
 }
 
 input {
@@ -123,7 +66,6 @@ input {
     color: $primaryColor;
     font-size: 2rem;
     border-bottom: 1px $primaryColor solid;
-
     &::placeholder {
         color: $primaryColor;
         font-weight: 200;
@@ -147,12 +89,6 @@ details {
         0%    {opacity: 0; margin-left: -10px}
         100%  {opacity: 1; margin-left: 0px}
     }
-}
-
-
-
-header, body {
-    text-align: center;
 }
 
 ul {
@@ -183,4 +119,72 @@ footer {
         width: 100%;
         padding: 20px 0;
     }
+}
+
+.wrapper {
+
+    @include mq-mobile {
+        width: 80%;
+        margin: 0 auto;
+    }
+
+    @include mq-tablet {
+        width: 90%;
+        margin: 0 auto;
+    }
+
+    @include mq-desktop {
+        max-width: 1080px;
+        width: 80%;
+        margin: 0 auto;
+    }
+}
+
+.tasksToComplete {
+    padding: 20px;
+}
+
+@keyframes backgroundGradient {
+	0% {
+		background-position: 0% 50%;
+	}
+	50% {
+		background-position: 100% 50%;
+	}
+	100% {
+		background-position: 0% 50%;
+	}
+}
+
+.buttonContainer {
+    button{
+        text-transform: uppercase;
+        padding: 7px 12px;
+        border-radius: 15px;
+        background: inherit;
+        color: $primaryColor;
+        border: 2px solid $primaryColor;
+        cursor: pointer;
+        font-size: 2rem;
+        margin: 10px 5px;
+
+        &:hover, &:focus {
+            background: $primaryColor;
+            color: $secondaryColor;
+        }
+    }
+}
+
+.error {
+    animation: sweep .5s ease-in-out;
+    border: 2px solid #ecf0f1;
+    border-radius: 10px;
+    padding: 10px;
+    margin: 15px 0;
+    background: darken($errorMessageBackground, 20%);
+}
+
+.gifContainer {
+    height: auto;
+    margin: 20px 0;
 }

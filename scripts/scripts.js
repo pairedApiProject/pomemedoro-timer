@@ -137,7 +137,7 @@ app.appendNewTasksFromFirebase = () => {
         const userTaskArray = [];
 
         for (let userTask in userTaskData) {
-          userTaskArray.push(`<li data-key=${userTask}><input type='checkbox' id=${userTask} tabindex="0"><label for=${userTask} tabindex="0">${userTaskData[userTask].description}</label></li>`);
+          userTaskArray.push(`<li data-key=${userTask}><label for=${userTask} tabindex="0"><input type='checkbox' id=${userTask} tabindex="0">${userTaskData[userTask].description}</label></li>`);
         };
 
         $('ul').empty();
@@ -158,7 +158,7 @@ app.appendExistingTasksFromFireBase = () => {
         const userTaskArray = [];
 
         for (let userTask in userTaskData) {
-            userTaskArray.push(`<li data-key=${userTask}><input type='checkbox' id=${userTask} tabindex="0"><label for=${userTask} tabindex="0">${userTaskData[userTask].description}</label></li>`);
+            userTaskArray.push(`<li data-key=${userTask}><label for=${userTask} tabindex="0"><input type='checkbox' id=${userTask} tabindex="0">${userTaskData[userTask].description}</label></li>`);
         };
 
         userTaskArray.forEach(task => {

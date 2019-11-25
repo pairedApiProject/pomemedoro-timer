@@ -1,115 +1,104 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link href="https://fonts.googleapis.com/css?family=Oswald:200,400,600|Rajdhani:500&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styles/styles.css">
-    <title>Pomemedoro Technique</title>
-</head>
-<body>
-    <div class="wrapper">
-        <header>
-            <h1>Pomemedoro Technique</h1>
-        </header>
-        <section>
-            <details>
-                <summary>How to Use the Pomemedoro Technique</summary>
-                <ol>
-                    <li>Write a task in the box below that you would like to work on. You're allowed a maximum of five tasks in your list.</li>
-                    <li>Set the timer for how long you would like to work on the task (the default is 25 minutes). You can
-                        increase or decrease the time by clicking on the plus and minus buttons under Work Duration. Press
-                        RESET to update the timer.</li>
-                    <li>Press the START button.</li>
-                    <li>Work on the task continuously until the alarm rings.</li>
-                    <li>Take a 5 minute break. Congratulations, you've completed one pomodoro!</li>
-                    <li>When your break is over the timer will start counting down another work duration.</li>
-                    <li>After completing four pomodoros (steps 4 and 5), take a longer break (15 - 30 minutes), then start
-                        again from step 4.</li>
-                    <li>Once you've completed your task, check it off.</li>
-                </ol>
-            </details>
-        </section>
-        <section class="tasksToComplete">
-            <form>
-                <label for="userTask">What task do you want to complete?</label>
-                <input class="" type="text" id="userTask" placeholder="Write task here">
-            </form>
-            <!-- Empty ul to append tasks -->
-            <ul></ul>
-        </section>
-        <section>
-            <div class="timerSettings">
-                
-                
-                <div class="pomoTimers settings">
-
-                    <!-- TODO: replace link for local audio clip -->
-                    <audio id="alarm" controls>
-                        <source src="assets/alarm.mp3" type="audio/mpeg">
-                    </audio>
-                    <div id="work">
-                        <p>Work Duration</p>
-                        <div class="workButtons">
-                            <button class="settings" id="workPlus">+</button>
-                            <div><span class="min" id="workMin">25</span> mins</div>
-                            <button class="settings" id="workMinus">-</button>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link href="https://fonts.googleapis.com/css?family=Oswald:200,400,600|Rajdhani:500&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="styles/styles.css">
+        <title>Pomemedoro Technique</title>
+    </head>
+    <body>
+        <div class="wrapper">
+            <header>
+                <h1><img src="./assets/tomato.png" alt="Tomato">Pomemedoro Technique<img src="./assets/tomato.png" class="secondTomato" alt="Tomato"></h1>
+            </header>
+            <section>
+                <details>
+                    <summary>How to Use the Pomemedoro Technique</summary>
+                    <ol>
+                        <li>Write a task in the box below that you would like to work on. You're allowed a maximum of five tasks in your list.</li>
+                        <li>Set the timer for how long you would like to work on the task (the default is 25 minutes). You can
+                            increase or decrease the time by clicking on the plus and minus buttons under Work Duration. Press
+                            RESET to update the timer.</li>
+                        <li>Press the START button.</li>
+                        <li>Work on the task continuously until the alarm rings.</li>
+                        <li>Take a 5 minute break. Congratulations, you've completed one pomodoro!</li>
+                        <li>When your break is over the timer will start counting down another work duration.</li>
+                        <li>After completing four pomodoros (steps 4 and 5), take a longer break (15 - 30 minutes), then start
+                            again from step 4.</li>
+                        <li>Once you've completed your task, check it off.</li>
+                    </ol>
+                </details>
+            </section>
+            <section class="tasksToComplete">
+                <form>
+                    <label for="userTask">What task do you want to complete?</label>
+                    <input class="" type="text" id="userTask" placeholder="Write task here">
+                </form>
+                <ul></ul>
+            </section>
+            <section>
+                <div class="timerSettings">
+                    <div class="pomoTimers settings">
+                        <audio id="alarm" controls>
+                            <source src="assets/alarm.mp3" type="audio/mpeg">
+                        </audio>
+                        <div id="work">
+                            <p>Work Duration</p>
+                            <div class="workButtons">
+                                <button class="settings" id="workPlus">+</button>
+                                <div><span class="min" id="workMin">25</span> mins</div>
+                                <button class="settings" id="workMinus">-</button>
+                            </div>
                         </div>
                     </div>
 
-                </div>
+                    <div class="pomoTimers pomoStart">
+                        <div class="status"></div>
+                        <div class="min timerDisplay">25:00</div>
+                        <button id="start" class="pomoButtonStart">START</button>
+                        <button id="reset" class="pomoButtonReset">SET TIME</button>
+                    </div>
 
-                <div class="pomoTimers pomoStart">
-                    <div class="status"></div>
-                    <div class="min timerDisplay">25:00</div>
-                    <button id="start" class="pomoButtonStart">START</button>
-                    <button id="reset" class="pomoButtonReset">SET TIME</button>
-                
-                </div>
-
-                <div class="pomoTimers breakSettings">
-                    
-                    <div id="break">
-                        <p>Break Duration</p>
-                        <div class="workButtons">
-                            <button class="settings" id="breakPlus">+</button>
-                            <div><span class="min" id="breakMin">5</span> mins</div>
-                            <button class="settings" id="breakMinus">-</button>
+                    <div class="pomoTimers breakSettings">
+                        <div id="break">
+                            <p>Break Duration</p>
+                            <div class="workButtons">
+                                <button class="settings" id="breakPlus">+</button>
+                                <div><span class="min" id="breakMin">5</span> mins</div>
+                                <button class="settings" id="breakMinus">-</button>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </section>
+            </section>
+            <section>
+                <div class="buttonContainer">
+                    <button value="kitten" id="kitten">Kitties</button>
+                    <button value="puppy" id="puppies">Puppies</button>
+                    <button value="coding" id="coding">coding</button>
+                    <button value="impeach" id="impeach">impeach</button>
+                    <button value="chaos" id="chaos">chaos</button>
+                    <button value="internet" id="internet">internet</button>
+                </div>
+                <div class="gifContainer"></div>
+                <div class="buttonContainer">
+                    <button value="weirder" id="weirder">Get Weirder</button>
+                </div>
+            </section>
+        </div>
+        <footer>
+            <div class="footerContainer">
+                <p class="footer">Timer code by <a href="https://www.cynthialee.io" target="_blank">Cynthia Lee</a></p>
+                <p>Alarm sound from <a href="http://soundbible.com/2160-Old-Fashion-Door-Bell.html">Sound Bible</a>, recorded by
+                    Daniel Simion</p>
+                </div>
+        </footer>
 
-        <section>
-            <div class="buttonContainer">
-                <button value="kitten" id="kitten">Kitties</button>
-                <button value="puppy" id="puppies">Puppies</button>
-                <button value="coding" id="coding">coding</button>
-                <button value="impeach" id="impeach">impeach</button>
-                <button value="chaos" id="chaos">chaos</button>
-                <button value="internet" id="internet">internet</button>
-            </div>
-            <div class="gifContainer">
-            </div>
-            <div class="buttonContainer">
-                <button value="weirder" id="weirder">Get Weirder</button>
-            </div>
-        </section>
-    </div>
-
-    <footer>
-        <div class="footerContainer">
-            <p class="footer">Timer code by <a href="https://www.cynthialee.io" target="_blank">Cynthia Lee</a></p>
-            <p>Alarm sound from <a href="http://soundbible.com/2160-Old-Fashion-Door-Bell.html">Sound Bible</a>, recorded by
-                Daniel Simion</p>
-            </div>
-    </footer>
-
-    <script src="https://www.gstatic.com/firebasejs/7.4.0/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/7.4.0/firebase-database.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.js" integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
-    <script src="scripts/scripts.js"></script>
-</body>
+        <script src="https://www.gstatic.com/firebasejs/7.4.0/firebase-app.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/7.4.0/firebase-database.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.js" integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
+        <script src="scripts/scripts.js"></script>
+    </body>
 </html>

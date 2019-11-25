@@ -189,26 +189,8 @@ h1, ul, li, body, button, ol, p {
   border: none;
 }
 
-@media (min-width: 320px) {
-  .wrapper {
-    width: 95%;
-    margin: 0 auto;
-  }
-}
-
-@media (min-width: 768px) {
-  .wrapper {
-    width: 90%;
-    margin: 0 auto;
-  }
-}
-
-@media (min-width: 1080px) {
-  .wrapper {
-    max-width: 1080px;
-    width: 80%;
-    margin: 0 auto;
-  }
+header, body {
+  text-align: center;
 }
 
 body {
@@ -223,36 +205,25 @@ body {
           animation: backgroundGradient 10s ease infinite;
 }
 
-.tasksToComplete {
-  padding: 20px;
-}
-
-@-webkit-keyframes backgroundGradient {
-  0% {
-    background-position: 0% 50%;
+@media (min-width: 320px) {
+  header h1 {
+    padding: 30px 0;
   }
-  50% {
-    background-position: 100% 50%;
-  }
-  100% {
-    background-position: 0% 50%;
+  header h1 img {
+    display: none;
   }
 }
 
-@keyframes backgroundGradient {
-  0% {
-    background-position: 0% 50%;
+@media (min-width: 768px) {
+  header h1 .secondTomato {
+    -webkit-transform: translateX(25%) translateY(15%);
+            transform: translateX(25%) translateY(15%);
   }
-  50% {
-    background-position: 100% 50%;
+  header h1 img {
+    display: inline-block;
+    -webkit-transform: translateX(-25%) translateY(15%);
+            transform: translateX(-25%) translateY(15%);
   }
-  100% {
-    background-position: 0% 50%;
-  }
-}
-
-header h1 {
-  padding: 30px 0;
 }
 
 audio {
@@ -264,36 +235,8 @@ a {
   color: inherit;
 }
 
-.buttonContainer button {
-  text-transform: uppercase;
-  padding: 7px 12px;
-  border-radius: 15px;
-  background: inherit;
-  color: #ecf0f1;
-  border: 2px solid #ecf0f1;
-  cursor: pointer;
-  font-size: 2rem;
-  margin: 10px 5px;
-}
-
-.buttonContainer button:hover, .buttonContainer button:focus {
-  background: #ecf0f1;
-  color: #362f36;
-}
-
-.error {
-  -webkit-animation: sweep .5s ease-in-out;
-          animation: sweep .5s ease-in-out;
-  border: 2px solid #ecf0f1;
-  border-radius: 10px;
-  padding: 10px;
-  margin: 15px 0;
-  background: #990000;
-}
-
-.gifContainer {
-  height: auto;
-  margin: 20px 0;
+label {
+  word-break: break-all;
 }
 
 input {
@@ -358,10 +301,6 @@ details[open] ol li {
   }
 }
 
-header, body {
-  text-align: center;
-}
-
 ul {
   list-style: none;
   width: 90%;
@@ -396,6 +335,88 @@ footer .footerContainer {
   bottom: 0;
   width: 100%;
   padding: 20px 0;
+}
+
+@media (min-width: 320px) {
+  .wrapper {
+    width: 80%;
+    margin: 0 auto;
+  }
+}
+
+@media (min-width: 768px) {
+  .wrapper {
+    width: 90%;
+    margin: 0 auto;
+  }
+}
+
+@media (min-width: 1080px) {
+  .wrapper {
+    max-width: 1080px;
+    width: 80%;
+    margin: 0 auto;
+  }
+}
+
+.tasksToComplete {
+  padding: 20px;
+}
+
+@-webkit-keyframes backgroundGradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+@keyframes backgroundGradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.buttonContainer button {
+  text-transform: uppercase;
+  padding: 7px 12px;
+  border-radius: 15px;
+  background: inherit;
+  color: #ecf0f1;
+  border: 2px solid #ecf0f1;
+  cursor: pointer;
+  font-size: 2rem;
+  margin: 10px 5px;
+}
+
+.buttonContainer button:hover, .buttonContainer button:focus {
+  background: #ecf0f1;
+  color: #362f36;
+}
+
+.error {
+  -webkit-animation: sweep .5s ease-in-out;
+          animation: sweep .5s ease-in-out;
+  border: 2px solid #ecf0f1;
+  border-radius: 10px;
+  padding: 10px;
+  margin: 15px 0;
+  background: #990000;
+}
+
+.gifContainer {
+  height: auto;
+  margin: 20px 0;
 }
 
 .timerSettings {
