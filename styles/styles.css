@@ -328,15 +328,17 @@ ul li input[type=checkbox] {
 
 footer {
   margin-top: 20px;
-  position: absolute;
-  bottom: 0;
-  width: 100%;
+  min-height: 10vh;
 }
 
 footer .footerContainer {
   background: black;
   width: 100%;
   padding: 20px 0;
+}
+
+.wrapper {
+  min-height: 90vh;
 }
 
 @media (min-width: 320px) {
