@@ -1,4 +1,4 @@
-article, aside, details, figcaption, figure, footer, header, hgroup, nav, section, summary {
+article, aside, figcaption, figure, footer, header, hgroup, nav, section, summary {
   display: block;
 }
 
@@ -215,12 +215,16 @@ body {
   font-family: 'Oswald', sans-serif;
   color: #ecf0f1;
   font-size: 2rem;
+  height: auto;
   width: 100%;
-  height: 100vh;
   background: linear-gradient(-45deg, #4c5b5c, #230c33, #4f000b, #221d23);
   background-size: 400% 400%;
   -webkit-animation: backgroundGradient 10s ease infinite;
           animation: backgroundGradient 10s ease infinite;
+}
+
+.tasksToComplete {
+  padding: 20px;
 }
 
 @-webkit-keyframes backgroundGradient {
@@ -269,12 +273,27 @@ a {
   border: 2px solid #ecf0f1;
   cursor: pointer;
   font-size: 2rem;
-  margin-top: 50px;
+  margin: 10px 5px;
 }
 
 .buttonContainer button:hover, .buttonContainer button:focus {
   background: #ecf0f1;
   color: #362f36;
+}
+
+.error {
+  -webkit-animation: sweep .5s ease-in-out;
+          animation: sweep .5s ease-in-out;
+  border: 2px solid #ecf0f1;
+  border-radius: 10px;
+  padding: 10px;
+  margin: 15px 0;
+  background: #990000;
+}
+
+.gifContainer {
+  height: auto;
+  margin: 20px 0;
 }
 
 input {
@@ -287,34 +306,56 @@ input {
 
 input::-webkit-input-placeholder {
   color: #ecf0f1;
+  font-weight: 200;
 }
 
 input:-ms-input-placeholder {
   color: #ecf0f1;
+  font-weight: 200;
 }
 
 input::-ms-input-placeholder {
   color: #ecf0f1;
+  font-weight: 200;
 }
 
 input::placeholder {
   color: #ecf0f1;
+  font-weight: 200;
 }
 
-details .fa-sort-down {
-  display: none;
+details[open] ol {
+  -webkit-animation: sweep .5s ease-in-out;
+          animation: sweep .5s ease-in-out;
+  font-weight: 200;
+  text-align: left;
+  margin: 0 20px;
 }
 
-details .fa-sort-down, details .fa-caret-right {
-  padding-right: 10px;
+details[open] ol li {
+  margin: 20px 0;
 }
 
-details[open] .fa-caret-right {
-  display: none;
+@-webkit-keyframes sweep {
+  0% {
+    opacity: 0;
+    margin-left: -10px;
+  }
+  100% {
+    opacity: 1;
+    margin-left: 0px;
+  }
 }
 
-details[open] .fa-sort-down {
-  display: inline-block;
+@keyframes sweep {
+  0% {
+    opacity: 0;
+    margin-left: -10px;
+  }
+  100% {
+    opacity: 1;
+    margin-left: 0px;
+  }
 }
 
 header, body {
@@ -323,13 +364,38 @@ header, body {
 
 ul {
   list-style: none;
+  width: 90%;
+  text-align: left;
+  margin: 0 auto;
 }
 
-.footerContainer {
+@media (min-width: 768px) {
+  ul {
+    width: 65%;
+  }
+}
+
+ul li {
+  padding: 10px;
+  font-weight: 200;
+}
+
+ul li input[type=checkbox] {
+  vertical-align: middle;
+  position: relative;
+  bottom: 2px;
+  margin-right: 15px;
+}
+
+footer {
+  margin-top: 20px;
+}
+
+footer .footerContainer {
   background: black;
-  position: fixed;
   bottom: 0;
   width: 100%;
+  padding: 20px 0;
 }
 
 .timerSettings {
@@ -344,10 +410,26 @@ ul {
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
-  margin: 50px 0;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  margin: 30px 0;
   font-size: 3rem;
   -ms-flex-wrap: wrap;
       flex-wrap: wrap;
+}
+
+@media (min-width: 768px) {
+  .timerSettings {
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: row;
+            flex-direction: row;
+    -webkit-box-pack: space-evenly;
+        -ms-flex-pack: space-evenly;
+            justify-content: space-evenly;
+  }
 }
 
 .timerSettings .workButtons {
@@ -379,7 +461,7 @@ ul {
 }
 
 .timerSettings .pomoTimers {
-  margin: 20px;
+  margin: 20px 0;
 }
 
 .timerSettings button {
@@ -400,6 +482,7 @@ ul {
 
 .timerSettings button.pomoButtonStart {
   background-color: green;
+  margin-right: 10px;
 }
 
 .timerSettings button.pomoButtonStart:hover, .timerSettings button.pomoButtonStart:focus {
@@ -410,6 +493,7 @@ ul {
 
 .timerSettings button.pomoButtonReset {
   background-color: red;
+  margin-left: 10px;
 }
 
 .timerSettings button.pomoButtonReset:hover, .timerSettings button.pomoButtonReset:focus {
