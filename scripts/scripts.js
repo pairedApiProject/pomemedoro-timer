@@ -98,7 +98,7 @@ app.listenForGifTag = () => {
 };
 
 app.insertErrorMessage = () => {
-    const $errorMessage = "<p class=\"error\" role=\"alert\" tabindex=\"0\">You can only have 5 tasks to complete at a time. Please mark one as complete to remove it from the list</p>";
+    const $errorMessage = "<p class='error' role='alert' tabindex='0'>You can only have 5 tasks to complete at a time. Please mark one as complete to remove it from the list</p>";
 
     $('label[for=userTask]').after($errorMessage);
 };
@@ -259,11 +259,11 @@ app.incrementFunctionality = () => {
 
 app.buttonDisplay = () => {
     if (app.isPaused && app.countdown === 0) {
-        app.startButton.text("Start");
+        app.startButton.text('Start');
     } else if (app.isPaused && app.countdown !== 0) {
-        app.startButton.text("Continue"); 
+        app.startButton.text('Continue'); 
     } else {
-        app.startButton.text("Pause");
+        app.startButton.text('Pause');
     }
 };
 
@@ -276,7 +276,7 @@ app.countdownDisplay = () => {
 app.updateTimerHTML = () => {
     app.countdownDisplay();
     app.buttonDisplay();
-    app.isWorkTime ? app.status.text("Keep Working") : app.status.text("Take a Break!");
+    app.isWorkTime ? app.status.text('Keep Working') : app.status.text('Take a Break!');
     app.workMin.text(app.workTime);
     app.breakMin.text(app.breakTime); 
 };
