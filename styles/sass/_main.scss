@@ -113,9 +113,11 @@ ul {
 
 footer {
     margin-top: 20px;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
     .footerContainer {
         background: black;
-        bottom: 0;
         width: 100%;
         padding: 20px 0;
     }
@@ -142,6 +144,7 @@ footer {
 
 .tasksToComplete {
     padding: 20px;
+    min-height: 100px;
 }
 
 @keyframes backgroundGradient {
