@@ -189,14 +189,15 @@ h1, ul, li, body, button, ol, p {
   border: none;
 }
 
-@media (min-width: 320px) {
-  .wrapper {
-    width: 95%;
-    margin: 0 auto;
-  }
+ul {
+  list-style: none;
 }
 
-@media (min-width: 768px) {
+img {
+  max-width: 100%;
+}
+
+@media (min-width: 320px) {
   .wrapper {
     width: 90%;
     margin: 0 auto;
@@ -247,8 +248,25 @@ body {
   }
 }
 
-header h1 {
-  padding: 30px 0;
+@media (min-width: 320px) {
+  header h1 {
+    padding: 30px 0;
+  }
+  header h1 img {
+    display: none;
+  }
+}
+
+@media (min-width: 768px) {
+  header h1 .secondTomato {
+    -webkit-transform: translateX(25%) translateY(15%);
+            transform: translateX(25%) translateY(15%);
+  }
+  header h1 img {
+    display: inline-block;
+    -webkit-transform: translateX(-25%) translateY(15%);
+            transform: translateX(-25%) translateY(15%);
+  }
 }
 
 audio {
@@ -260,6 +278,15 @@ a {
   color: inherit;
 }
 
+.buttonContainer {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
 .buttonContainer button {
   text-transform: uppercase;
   padding: 7px 12px;
@@ -269,7 +296,7 @@ a {
   border: 2px solid #ecf0f1;
   cursor: pointer;
   font-size: 2rem;
-  margin-top: 50px;
+  margin: 20px 15px;
 }
 
 .buttonContainer button:hover, .buttonContainer button:focus {
@@ -277,55 +304,88 @@ a {
   color: #362f36;
 }
 
-input {
-  background-color: inherit;
-  border: none;
-  color: #ecf0f1;
-  font-size: 2rem;
-  border-bottom: 1px #ecf0f1 solid;
+@media (min-width: 320px) {
+  input {
+    background-color: inherit;
+    border: none;
+    color: #ecf0f1;
+    font-size: 2rem;
+    border-bottom: 1px #ecf0f1 solid;
+    margin-top: 20px;
+    width: 70%;
+  }
+  input::-webkit-input-placeholder {
+    color: #ecf0f1;
+    text-align: center;
+  }
+  input:-ms-input-placeholder {
+    color: #ecf0f1;
+    text-align: center;
+  }
+  input::-ms-input-placeholder {
+    color: #ecf0f1;
+    text-align: center;
+  }
+  input::placeholder {
+    color: #ecf0f1;
+    text-align: center;
+  }
 }
 
-input::-webkit-input-placeholder {
-  color: #ecf0f1;
+@media (min-width: 768px) {
+  input {
+    width: 50%;
+  }
+  input::-webkit-input-placeholder {
+    text-align: left;
+  }
+  input:-ms-input-placeholder {
+    text-align: left;
+  }
+  input::-ms-input-placeholder {
+    text-align: left;
+  }
+  input::placeholder {
+    text-align: left;
+  }
 }
 
-input:-ms-input-placeholder {
-  color: #ecf0f1;
+@media (min-width: 320px) {
+  details {
+    text-align: center;
+    border: 2px solid #ecf0f1;
+    padding: 5%;
+  }
+  details .fa-sort-down {
+    display: none;
+  }
+  details .fa-sort-down, details .fa-caret-right {
+    padding-right: 10px;
+  }
+  details[open] .fa-caret-right {
+    display: none;
+  }
+  details[open] .fa-sort-down {
+    display: inline-block;
+  }
 }
 
-input::-ms-input-placeholder {
-  color: #ecf0f1;
-}
-
-input::placeholder {
-  color: #ecf0f1;
-}
-
-details .fa-sort-down {
-  display: none;
-}
-
-details .fa-sort-down, details .fa-caret-right {
-  padding-right: 10px;
-}
-
-details[open] .fa-caret-right {
-  display: none;
-}
-
-details[open] .fa-sort-down {
-  display: inline-block;
+@media (min-width: 320px) and (min-width: 768px) {
+  details {
+    text-align: left;
+    padding: 2% 5%;
+  }
 }
 
 header, body {
   text-align: center;
 }
 
-ul {
-  list-style: none;
+footer {
+  margin-top: 100px;
 }
 
-.footerContainer {
+footer .footerContainer {
   background: black;
   position: fixed;
   bottom: 0;

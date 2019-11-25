@@ -20,17 +20,21 @@ h1, ul, li, body, button, ol, p {
     border: none;
 }
 
+ul {
+    list-style: none;
+}
+
+img {
+    max-width: 100%;
+}
+
 .wrapper {
 
     @include mq-mobile {
-        width: 95%;
-        margin: 0 auto;
-    }
-
-    @include mq-tablet {
         width: 90%;
         margin: 0 auto;
     }
+
 
     @include mq-desktop {
         max-width: 1080px;
@@ -65,7 +69,25 @@ body {
 header {
 
     h1 {
-        padding: 30px 0;
+        @include mq-mobile {
+            padding: 30px 0;
+
+            img {
+                display: none;
+            }
+        }
+
+        @include mq-tablet {
+
+            .secondTomato {
+                transform: translateX(25%) translateY(15%);
+            }
+
+            img {
+                display: inline-block;
+                transform: translateX(-25%) translateY(15%);
+            }
+        }
     }
 }
 
@@ -84,6 +106,9 @@ a {
 
 .buttonContainer {
 
+    display: flex;
+    justify-content: center;
+
     button{
         text-transform: uppercase;
         padding: 7px 12px;
@@ -93,7 +118,9 @@ a {
         border: 2px solid $primaryColor;
         cursor: pointer;
         font-size: 2rem;
-        margin-top: 50px;
+        margin: 20px 15px;
+        // margin-top: 50px;
+        
 
         &:hover, &:focus {
             background: $primaryColor;
@@ -103,34 +130,60 @@ a {
 }
 
 input {
-    background-color: inherit;
-    border: none;
-    color: $primaryColor;
-    font-size: 2rem;
-    border-bottom: 1px $primaryColor solid;
-
-    &::placeholder {
+    @include mq-mobile {
+        background-color: inherit;
+        border: none;
         color: $primaryColor;
+        font-size: 2rem;
+        border-bottom: 1px $primaryColor solid;
+        margin-top: 20px;
+        width: 70%;
+
+        &::placeholder {
+            color: $primaryColor;
+            text-align: center;
+        }
     }
+
+    @include mq-tablet {
+        width: 50%;
+        &::placeholder {
+            text-align: left;
+        }
+    }
+
+
 }
 
 details {
 
-    .fa-sort-down {
-        display: none;
-    }
+    @include mq-mobile {
+        text-align: center;
+        border: 2px solid $primaryColor;
+        padding: 5%;
 
-    .fa-sort-down, .fa-caret-right {
-        padding-right: 10px;
-    }
-
-    &[open] {
-        .fa-caret-right {
+        .fa-sort-down {
             display: none;
         }
 
-        .fa-sort-down {
-            display: inline-block;
+        .fa-sort-down, .fa-caret-right {
+            padding-right: 10px;
+        }
+
+        &[open] {
+            .fa-caret-right {
+                display: none;
+            }
+
+            .fa-sort-down {
+                display: inline-block;
+            }
+        }
+
+    @include mq-tablet {
+        text-align: left;
+        padding: 2% 5%;
+        
         }
     }
 }
@@ -141,14 +194,17 @@ header, body {
     text-align: center;
 }
 
-ul {
-    list-style: none;
-}
 
-.footerContainer {
-    background: black;
-    position: fixed;
-    bottom: 0;
-    width: 100%;
+
+footer {
+    
+    margin-top: 100px;
+
+    .footerContainer {
+        background: black;
+        position: fixed;
+        bottom: 0;
+        width: 100%;
+    }
 }
 
