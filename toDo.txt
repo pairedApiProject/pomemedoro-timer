@@ -1,9 +1,13 @@
+line height for minus signs.
+fix footer position
+link to gifContainer when clicking gif Buttons
+smooth animation for opening instructions. 
+media query for mobile/tablet, check for bugs
 
-keep checked items as checked
 
-add hover/focus in css
 
-misc timer text below: 
+
+old timer text below: 
 
 // app.startTimer = () => {
     

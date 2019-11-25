@@ -1,26 +1,51 @@
 // TIMER STYLES GO IN HERE
 
-// example timers
-
-// https://i2.wp.com/www.cssscript.com/wp-content/uploads/2017/08/Circular-Countdown-Timer-In-JavaScript-And-CSS3.png?fit=445%2C325&ssl=1
-
 .timerSettings {
     display: flex;
     align-items: center;
     align-content: center;
     justify-content: center;
     margin: 50px 0;
+    font-size: 3rem;
+    flex-wrap: wrap;
 
+    .workButtons {
+        display: flex;
+
+        button {
+            margin: 0 10px;
+        }
+    }
+
+    .timerDisplay {
+        @include mq-mobile {
+            font-size: 3rem;
+        }
+
+        @include mq-tablet {
+            font-size: 5rem;
+        }
+
+        @include mq-desktop {
+            font-size: 6rem;
+        }
+    }
+
+    .pomoTimers {
+        margin: 20px;
+    }
+    
     button {
         text-transform: uppercase;
-        padding: 0 1.25rem;
-        border-radius: 40px;
-        background: #362f36;
-        color: #ecf0f1;
-        border: 2px solid #ecf0f1;
+        padding: 0 15px;
+        border-radius: 20px;
+        background: inherit;
+        color: $primaryColor;
+        border: 2px solid $primaryColor;
         cursor: pointer;
         font-size: 2.5rem;
-        &:hover {
+
+        &:hover, &:focus {
             background-color: $primaryColor;
             color: $secondaryColor;
         }
@@ -28,7 +53,7 @@
         &.pomoButtonStart {
             background-color: green;
 
-            &:hover {
+            &:hover, &:focus {
                 background-color: lighten(green, 70%);
                 color: darken($primaryColor, 70%);
                 border: 2px solid darken($primaryColor, 70%);
@@ -38,12 +63,11 @@
         &.pomoButtonReset {
             background-color: red;
 
-            &:hover {
+            &:hover, &:focus {
                 background-color: lighten(red, 70%);
                 color: darken(red, 70%);
                 border: 2px solid darken(red, 70%);
             }
-
         }
     }
 

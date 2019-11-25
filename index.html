@@ -16,10 +16,10 @@
         </header>
         <section>
             <details>
-                <summary><i class="fas fa-sort-down"></i>Instructions on How to Use the Pomemedoro Technique</summary>
+                <summary><i class="fas fa-caret-right"></i><i class="fas fa-sort-down"></i>Instructions on How to Use the Pomemedoro Technique</summary>
                 <p>
                     <ol>
-                        <li>Choose a task you would like to work on.</li>
+                        <li>Write a task in the box below that you would like to work on. You're allowed a maximum of five tasks in your list.</li>
                         <li>Set the timer for how long you would like to work on the task (the default is 25 minutes). You can
                             increase or decrease the time by clicking on the plus and minus buttons under Work Duration. Press
                             RESET to update the timer.</li>
@@ -46,7 +46,7 @@
             <div class="timerSettings">
                 
                 
-                <div class="settings">
+                <div class="pomoTimers settings">
 
                     <!-- TODO: replace link for local audio clip -->
                     <audio id="alarm" controls>
@@ -54,28 +54,32 @@
                     </audio>
                     <div id="work">
                         <p>Work Duration</p>
-                        <button class="settings" id="workPlus">+</button>
-                        <div><span class="min" id="workMin">25</span> mins</div>
-                        <button class="settings" id="workMinus">-</button>
+                        <div class="workButtons">
+                            <button class="settings" id="workPlus">+</button>
+                            <div><span class="min" id="workMin">25</span> mins</div>
+                            <button class="settings" id="workMinus">-</button>
+                        </div>
                     </div>
 
                 </div>
 
-                <div class="pomoStart">
+                <div class="pomoTimers pomoStart">
                     <div class="status"></div>
                     <div class="min timerDisplay">25:00</div>
                     <button id="start" class="pomoButtonStart">START</button>
-                    <button id="reset" class="pomoButtonReset">RESET</button>
+                    <button id="reset" class="pomoButtonReset">SET TIME</button>
                 
                 </div>
 
-                <div class="breakSettings">
+                <div class="pomoTimers breakSettings">
                     
                     <div id="break">
                         <p>Break Duration</p>
-                        <button class="settings" id="breakPlus">+</button>
-                        <div><span class="min" id="breakMin">5</span> mins</div>
-                        <button class="settings" id="breakMinus">-</button>
+                        <div class="workButtons">
+                            <button class="settings" id="breakPlus">+</button>
+                            <div><span class="min" id="breakMin">5</span> mins</div>
+                            <button class="settings" id="breakMinus">-</button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -83,15 +87,15 @@
 
         <section>
             <div class="buttonContainer">
-                <button value="kitten" id="kitten">Kitties</button>
-                <button value="puppy" id="puppies">Puppies</button>
-                <button value="coding" id="coding">coding</button>
-                <button value="impeach" id="impeach">impeach</button>
-                <button value="chaos" id="chaos">chaos</button>
-                <button value="internet" id="internet">internet</button>
+                <a href="#goToGif"><button value="kitten" id="kitten">Kitties</button></a>
+                <a href="#goToGif"><button value="puppy" id="puppies">Puppies</button></a>
+                <a href="#goToGif"><button value="coding" id="coding">coding</button></a>
+                <a href="#goToGif"><button value="impeach" id="impeach">impeach</button></a>
+                <a href="#goToGif"><button value="chaos" id="chaos">chaos</button></a>
+                <a href="#goToGif"><button value="internet" id="internet">internet</button></a>
             </div>
 
-            <div class="gifContainer">
+            <div class="gifContainer" id="#goToGif">
 
             </div>
             <div class="buttonContainer">
@@ -101,13 +105,15 @@
     </div>
 
     <footer>
-        <p class="footer">Timer code by <a href="https://www.cynthialee.io" target="_blank">Cynthia Lee</a></p>
-        <p>Alarm sound from <a href="http://soundbible.com/2160-Old-Fashion-Door-Bell.html">Sound Bible</a>, recorded by
-            Daniel Simion</p>
+        <div class="footerContainer">
+            <p class="footer">Timer code by <a href="https://www.cynthialee.io" target="_blank">Cynthia Lee</a></p>
+            <p>Alarm sound from <a href="http://soundbible.com/2160-Old-Fashion-Door-Bell.html">Sound Bible</a>, recorded by
+                Daniel Simion</p>
+            </div>
     </footer>
+
     <script src="https://www.gstatic.com/firebasejs/7.4.0/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/7.4.0/firebase-database.js"></script>
-    <script src="scripts/moment.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.js" integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
     <script src="scripts/scripts.js"></script>
 </body>

@@ -183,11 +183,72 @@ html {
   font-size: 62.5%;
 }
 
+h1, ul, li, body, button, ol, p {
+  margin: 0;
+  padding: 0;
+  border: none;
+}
+
+@media (min-width: 320px) {
+  .wrapper {
+    width: 95%;
+    margin: 0 auto;
+  }
+}
+
+@media (min-width: 768px) {
+  .wrapper {
+    width: 90%;
+    margin: 0 auto;
+  }
+}
+
+@media (min-width: 1080px) {
+  .wrapper {
+    max-width: 1080px;
+    width: 80%;
+    margin: 0 auto;
+  }
+}
+
 body {
   font-family: 'Oswald', sans-serif;
-  background: #362f36;
   color: #ecf0f1;
   font-size: 2rem;
+  width: 100%;
+  height: 100vh;
+  background: linear-gradient(-45deg, #4c5b5c, #230c33, #4f000b, #221d23);
+  background-size: 400% 400%;
+  -webkit-animation: backgroundGradient 10s ease infinite;
+          animation: backgroundGradient 10s ease infinite;
+}
+
+@-webkit-keyframes backgroundGradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+@keyframes backgroundGradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+header h1 {
+  padding: 30px 0;
 }
 
 audio {
@@ -199,17 +260,11 @@ a {
   color: inherit;
 }
 
-h1, ul, li, body, button {
-  margin: 0;
-  padding: 0;
-  border: none;
-}
-
 .buttonContainer button {
   text-transform: uppercase;
   padding: 7px 12px;
   border-radius: 15px;
-  background: #362f36;
+  background: inherit;
   color: #ecf0f1;
   border: 2px solid #ecf0f1;
   cursor: pointer;
@@ -217,11 +272,17 @@ h1, ul, li, body, button {
   margin-top: 50px;
 }
 
+.buttonContainer button:hover, .buttonContainer button:focus {
+  background: #ecf0f1;
+  color: #362f36;
+}
+
 input {
-  background-color: #362f36;
+  background-color: inherit;
   border: none;
   color: #ecf0f1;
   font-size: 2rem;
+  border-bottom: 1px #ecf0f1 solid;
 }
 
 input::-webkit-input-placeholder {
@@ -240,10 +301,20 @@ input::placeholder {
   color: #ecf0f1;
 }
 
-.wrapper {
-  max-width: 1080px;
-  width: 80%;
-  margin: 0 auto;
+details .fa-sort-down {
+  display: none;
+}
+
+details .fa-sort-down, details .fa-caret-right {
+  padding-right: 10px;
+}
+
+details[open] .fa-caret-right {
+  display: none;
+}
+
+details[open] .fa-sort-down {
+  display: inline-block;
 }
 
 header, body {
@@ -254,8 +325,11 @@ ul {
   list-style: none;
 }
 
-footer {
+.footerContainer {
   background: black;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
 }
 
 .timerSettings {
@@ -271,20 +345,55 @@ footer {
       -ms-flex-pack: center;
           justify-content: center;
   margin: 50px 0;
+  font-size: 3rem;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+}
+
+.timerSettings .workButtons {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.timerSettings .workButtons button {
+  margin: 0 10px;
+}
+
+@media (min-width: 320px) {
+  .timerSettings .timerDisplay {
+    font-size: 3rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .timerSettings .timerDisplay {
+    font-size: 5rem;
+  }
+}
+
+@media (min-width: 1080px) {
+  .timerSettings .timerDisplay {
+    font-size: 6rem;
+  }
+}
+
+.timerSettings .pomoTimers {
+  margin: 20px;
 }
 
 .timerSettings button {
   text-transform: uppercase;
-  padding: 0 1.25rem;
-  border-radius: 40px;
-  background: #362f36;
+  padding: 0 15px;
+  border-radius: 20px;
+  background: inherit;
   color: #ecf0f1;
   border: 2px solid #ecf0f1;
   cursor: pointer;
   font-size: 2.5rem;
 }
 
-.timerSettings button:hover {
+.timerSettings button:hover, .timerSettings button:focus {
   background-color: #ecf0f1;
   color: #362f36;
 }
@@ -293,7 +402,7 @@ footer {
   background-color: green;
 }
 
-.timerSettings button.pomoButtonStart:hover {
+.timerSettings button.pomoButtonStart:hover, .timerSettings button.pomoButtonStart:focus {
   background-color: #e6ffe6;
   color: #334145;
   border: 2px solid #334145;
@@ -303,7 +412,7 @@ footer {
   background-color: red;
 }
 
-.timerSettings button.pomoButtonReset:hover {
+.timerSettings button.pomoButtonReset:hover, .timerSettings button.pomoButtonReset:focus {
   background-color: white;
   color: black;
   border: 2px solid black;

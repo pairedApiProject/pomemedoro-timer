@@ -1,31 +1,29 @@
 const app = {};
 
-// properties for timer //
-app.countdown = 0; // variable to set/clear intervals
+// start of properties for timer //
+app.countdown = 0;
     
-app.seconds = 1500; // seconds left on the clock
+app.seconds = 1500;
 
 app.workTime = 25;
 
 app.breakTime = 5;
 
-app.isBreak = true;
-
-app.canLoadGif = false;
+app.isWorkTime = true;
 
 app.isPaused = true;
 
-app.status = $(".status");
+app.status = $('.status');
 
-app.timerDisplay = $(".timerDisplay");
+app.timerDisplay = $('.timerDisplay');
 
-app.startButton = $("#start");
+app.startButton = $('#start');
 
-app.resetButton = $("#reset");
+app.resetButton = $('#reset');
 
-app.workMin = $("#workMin");
+app.workMin = $('#workMin');
 
-app.breakMin = $("#breakMin");
+app.breakMin = $('#breakMin');
 
 app.alarm = $('#alarm');
 
@@ -39,24 +37,26 @@ app.workMinus = $('#workMinus');
 
 app.breakMinus = $('#breakMinus');
 
+app.gifButtons = $('.buttonContainer button');
+
 app.apiKey = 'k7mCxvFuj9fH4f1oknjhDcLF11W7hyhF';
 
 app.minutes = 0;
 
 app.remainderSeconds = 0;
-// properties for timer //
+// end of properties for timer //
 
 app.firebaseConfig = {
-    apiKey: "AIzaSyAZDtWtR2JE52zQWdRGBm0huf5XZ2dEGWI",
-    authDomain: "pomodoroapp-b07bd.firebaseapp.com",
-    databaseURL: "https://pomodoroapp-b07bd.firebaseio.com",
-    projectId: "pomodoroapp-b07bd",
-    storageBucket: "pomodoroapp-b07bd.appspot.com",
-    messagingSenderId: "650747741337",
-    appId: "1:650747741337:web:76dda3ce7fe846137f2408"
+    apiKey: 'AIzaSyAZDtWtR2JE52zQWdRGBm0huf5XZ2dEGWI',
+    authDomain: 'pomodoroapp-b07bd.firebaseapp.com',
+    databaseURL: 'https://pomodoroapp-b07bd.firebaseio.com',
+    projectId: 'pomodoroapp-b07bd',
+    storageBucket: 'pomodoroapp-b07bd.appspot.com',
+    messagingSenderId: '650747741337',
+    appId: '1:650747741337:web:76dda3ce7fe846137f2408'
 };
 
-app.giphy = (searchTerm = 'puppies') => {
+app.callGiphyAPI = searchTerm => {
     $.ajax({
         url: `https://api.giphy.com/v1/gifs/random`,
         method: 'GET',
@@ -69,129 +69,126 @@ app.giphy = (searchTerm = 'puppies') => {
         }
     }).then(result => {
         app.filterGif(result.data);    
-})};
-
-app.appendGif = (bigGif) => {
-    $('.gifContainer').html(`<img src="${bigGif.url}">`);
+    });
 };
 
-app.filterGif = (giphyObject) => {
-    const imageWidth = giphyObject.images.original.width;
-    const gif = giphyObject.images.original;
-    
-    if (!app.isBreak)   {
-        if (imageWidth < 360) {
-        app.giphy();
-        } else {
-            app.appendGif(gif);
-        }
+app.appendGif = (gif) => {
+    $('.gifContainer').html(`<img src=${gif.url}>`);
+};
+
+app.filterGif = (gifObject) => {
+    const gifWidth = gifObject.images.original.width;
+    const gif = gifObject.images.original;
+
+    if (gifWidth < 360) {
+        app.callGiphyAPI();
     } else {
-        $('.gifContainer').empty();
+        app.appendGif(gif);
     }
 };
 
-app.getButtonValue = () => {
-    $(".buttonContainer button").on('click', function (e) {
+app.listenForGifTag = () => {
+    app.gifButtons.on('click', function(e) {
         e.preventDefault();
 
         app.searchTerm = $(this).val();
         
-        app.giphy(app.searchTerm);
+        app.callGiphyAPI(app.searchTerm);
     });
 };
 
-app.toDoList = () => {
+app.insertErrorMessage = () => {
+    const $errorMessage = "<p class=\"error\" role=\"alert\" tabindex=\"0\">You can only have 5 tasks to complete at a time. Please mark one as complete to remove it from the list</p>";
+
+    $('label[for=userTask]').after($errorMessage);
+};
+
+app.userTaskList = () => {
     $('form').on('submit', function(e) {
         e.preventDefault();
 
         if ($('input').val() !== '') {
-            // store what the user typed in a variable
-            const toDoItem = $('input').val();
-
-            // create obj that contains toDoItems
-            const toDoObj = {
-              description: toDoItem,
-              completed: false,
+            const task = $('input').val();
+            const taskObject = {
+              description: task
             };
-            // push new object into my database
-            app['dbRef'].push(toDoObj);
-            
-            // clear input
+
+            if ($('ul').children().length <= 4) {
+                app.newTask = app.dbOnly.ref('tasks').push(taskObject);
+            } else {
+                app.insertErrorMessage();
+            }
+
             $('input').val('');
         };
 
-        app['dbRef'].on('value', (data) => {
-            const toDoData = data.val();
-            console.log(data.val());
-          
-            const toDoArray = [];
-      
-            for (let property in toDoData) {
-              toDoArray.push(`<li><span class="fa fa-square-o"></span> ${toDoData[property].description}</li>`);
-            };
-      
-            $('ul').empty();
-      
-            toDoArray.forEach(item => {
-              $('ul').append(item);
-            });
-        });
-
-        
-        
-      
+        app.appendNewTasksFromFirebase();
     });
 };
 
-app.loadPreviousToDoList = () => {
-    app['dbRef'].once('value', (data) => {
-        const toDoData = data.val();
-        console.log(data.val());
+app.appendNewTasksFromFirebase = () => {
+    const userRefForNewTasks = app.dbOnly.ref('tasks');
 
-        const toDoArray = [];
+    userRefForNewTasks.on('value', (data) => {
+        const userTaskData = data.val();
+        const userTaskArray = [];
 
-        for (let property in toDoData) {
-            toDoArray.push(`<li><span class="fa fa-square-o"></span> ${toDoData[property].description}</li>`);
+        for (let userTask in userTaskData) {
+          userTaskArray.push(`<li data-key=${userTask}><span class='fa fa-square-o'></span>${userTaskData[userTask].description}</li>`);
         };
 
-        toDoArray.forEach(item => {
-            console.log(item);
-            $('ul').append(item);
-        });
+        $('ul').empty();
+
+        if ($('ul').children().length <= 4) {
+            userTaskArray.forEach(task => {
+                $('ul').append(task);
+            });
+        }
     });
 };
 
-app.isToDoComplete = () => {
-    $('ul').on('click', 'li', function () {
-        console.log('it worked');
-        const checkBox = $(this).find('.fa');
-        const selectedKey = $(this).data('key');
-        // creating a reference to the correct node using the previous variable
-        const toDoItemRef = firebase.database().ref(`/${selectedKey}`);
-        // getting snapshot of the appropriate node without listening for changes
-        // toDoItemRef.once('value', (data) => {
-        // grab the data
-        // const targeted = data.val();
-        // update the complete status of the correct to-do
-        // toDoItemRef.update({
-        //     complete: !targeted.complete
-        // })
-        // })
-        checkBox.toggleClass("fa-square-o fa-check-square-o");
-        $(this).toggleClass("text-muted")
+app.appendExistingTasksFromFireBase = () => {
+    const userRefForExistingTasks = app.dbOnly.ref('tasks');
+
+    userRefForExistingTasks.once('value', (data) => {
+        const userTaskData = data.val();
+        const userTaskArray = [];
+
+        for (let userTask in userTaskData) {
+            userTaskArray.push(`<li data-key=${userTask}><span class='fa fa-square-o'></span>${userTaskData[userTask].description}</li>`);
+        };
+
+        userTaskArray.forEach(task => {
+            $('ul').append(task);
+        }); 
     });
 };
 
-// timer functions //
+app.taskClickListener  = () => {             
+    $('ul').on('click', 'li', function() {
+        const $checkBox = $(this).find('.fa');
+
+        $checkBox.toggleClass('fa-square-o fa-check-square-o');
+        $(this).toggleClass('taskComplete');
+
+        if ($(this).hasClass('taskComplete')) {
+            const $dataKey = $(this).attr('data-key');
+
+            $(this).remove();
+            app.dbOnly.ref(`tasks/${$dataKey}`).remove();
+        }
+    });
+};
+
+// start of timer functions //
 app.startTimer = () => {
-    console.log("is paused 1: ", app.isPaused);
     app.startButton.on('click', () => {
         clearInterval(app.countdown);
-        app.isPaused = !app.isPaused;
-        console.log("is paused 2: ", app.isPaused);
-        if (!app.isPaused) {
-            console.log("is paused 3: ", app.isPaused);
-            app.countdown = setInterval(app.timerCountdown, 10);
+        
+        app.isPaused = !(app.isPaused);
+        
+        if (!(app.isPaused)) {
+            app.countdown = setInterval(app.timerCountdown, 1000);
         }
     })    
 };
@@ -199,23 +196,37 @@ app.startTimer = () => {
 app.resetTimer = () => {
     app.resetButton.on('click', () => {
         clearInterval(app.countdown);
+
         app.seconds = app.workTime * 60;
         app.countdown = 0;
         app.isPaused = true;
-        app.isBreak = true;
+        app.isWorkTime = true;
     })
+};
+
+app.toggleGifAndButtons = () => {
+    if (app.isWorkTime) {
+        app.gifButtons.toggle();
+        $('.gifContainer').empty();
+    }
+
+    if (!(app.isWorkTime)) {
+        app.gifButtons.toggle();
+        app.callGiphyAPI();
+    }
 };
 
 app.timerCountdown = () => {
     app.seconds--;
 
     if (app.seconds <= 0) {
+        alarm.play();
+        app.alarm.currentTime = 0;
         clearInterval(app.countdown);
-        // alarm.currentTime = 0;
-        // app.alarm.play();
-        app.seconds = (app.isBreak ? app.breakTime : app.workTime) * 60; 
-        app.isBreak = !app.isBreak;
-        app.countdown = setInterval(app.timerCountdown, 10);
+        app.seconds = (app.isWorkTime ? app.breakTime : app.workTime) * 60;
+        app.isWorkTime = !(app.isWorkTime);
+        app.countdown = setInterval(app.timerCountdown, 1000);
+        app.toggleGifAndButtons();
     }
 };
 
@@ -235,10 +246,10 @@ app.incrementFunctionality = () => {
         }
     };
 
-    for (let key in incrementFunctions) {
-        if (incrementFunctions.hasOwnProperty(key)) {
-            let buttonId = key.toString();
-            $(`#${key}`).on('click', function() {
+    for (let timerFunction in incrementFunctions) {
+        if (incrementFunctions.hasOwnProperty(timerFunction)) {
+            let buttonId = timerFunction.toString();
+            $(`#${timerFunction}`).on('click', function() {
                 incrementFunctions[buttonId]();
             });
         }
@@ -248,7 +259,7 @@ app.incrementFunctionality = () => {
 
 app.buttonDisplay = () => {
     if (app.isPaused && app.countdown === 0) {
-        app.startButton.text("START");
+        app.startButton.text("Start");
     } else if (app.isPaused && app.countdown !== 0) {
         app.startButton.text("Continue"); 
     } else {
@@ -262,53 +273,31 @@ app.countdownDisplay = () => {
     app.timerDisplay.text(`${app.minutes} : ${app.remainderSeconds < 10 ? '0' : ''}${app.remainderSeconds}`);
 };
 
-app.updateHTML = () => {
+app.updateTimerHTML = () => {
     app.countdownDisplay();
     app.buttonDisplay();
-    app.isBreak ? app.status.text("Keep Working") : app.status.text("Take a Break!");
-
+    app.isWorkTime ? app.status.text("Keep Working") : app.status.text("Take a Break!");
     app.workMin.text(app.workTime);
     app.breakMin.text(app.breakTime); 
 };
-// timer functions //
+// end of timer functions //
 
 app.init = () => {
     app.dbRef = firebase.database().ref();
-    app.loadPreviousToDoList();
-    app.toDoList();
-    app.isToDoComplete();
-    // keep this api call here, so gif appears on page load
-    app.updateHTML();
-    app.giphy();
+    app.dbOnly = firebase.database();
+    app.appendExistingTasksFromFireBase();
+    app.userTaskList();
+    app.taskClickListener();
+    app.listenForGifTag();
+    app.updateTimerHTML();
     app.incrementFunctionality();
     app.startTimer();
     app.resetTimer();
-    setInterval(app.updateHTML, 10);
+    app.gifButtons.toggle();
+    setInterval(app.updateTimerHTML, 1000);
 };
 
 $(document).ready( () => {
     firebase.initializeApp(app.firebaseConfig);
     app.init();
 });
-
-// timer to blank on page load
-// when user clicks a button, it starts countdown from 25 minutes
-// increment counter by 1
-
-// button event handler
-
-// own little function
-    // when 25 minutes is up, something notifies user to take a break (maybe a sound??? alert???)
-    // count down 5 minutes
-    // buttons become visible
-    // then hide when 5 minutes is up
-
-// own function
-    // start 25 minute timer again 
-    // increment counter by 1
-
-// once the counter reaches 3
-// start a timer for a 20 minute break
-// enable buttons again
-
-//repeat

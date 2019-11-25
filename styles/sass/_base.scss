@@ -1,18 +1,72 @@
-// BASE STYLES GO IN HERE
+// BASE/MAIN STYLES GO IN HERE
+
+// To-do - rename this sass file?
 
 
 $primaryColor: #ecf0f1;
 $secondaryColor: #362f36;
 
+// change secondary color based on background
+
 html {
     font-size: 62.5%;
 }
 
+// remove default margin and padding for h1, ul, li 
+
+h1, ul, li, body, button, ol, p {
+    margin: 0;
+    padding: 0;
+    border: none;
+}
+
+.wrapper {
+
+    @include mq-mobile {
+        width: 95%;
+        margin: 0 auto;
+    }
+
+    @include mq-tablet {
+        width: 90%;
+        margin: 0 auto;
+    }
+
+    @include mq-desktop {
+        max-width: 1080px;
+        width: 80%;
+        margin: 0 auto;
+    }
+}
+
 body {
     font-family: 'Oswald', sans-serif;
-    background: $secondaryColor;
     color: $primaryColor;
     font-size: 2rem;
+    width: 100%;
+    height: 100vh;
+    background: linear-gradient(-45deg, #4c5b5c, #230c33, #4f000b, #221d23);
+    background-size: 400% 400%;
+    animation: backgroundGradient 10s ease infinite;
+}
+
+@keyframes backgroundGradient {
+	0% {
+		background-position: 0% 50%;
+	}
+	50% {
+		background-position: 100% 50%;
+	}
+	100% {
+		background-position: 0% 50%;
+	}
+}
+
+header {
+
+    h1 {
+        padding: 30px 0;
+    }
 }
 
 audio {
@@ -24,14 +78,9 @@ a {
     color: inherit;
 }
 
-// remove default margin and padding for h1, ul, li 
 
 
-h1, ul, li, body, button {
-    margin: 0;
-    padding: 0;
-    border: none;
-}
+
 
 .buttonContainer {
 
@@ -39,34 +88,54 @@ h1, ul, li, body, button {
         text-transform: uppercase;
         padding: 7px 12px;
         border-radius: 15px;
-        background: #362f36;
-        color: #ecf0f1;
-        border: 2px solid #ecf0f1;
+        background: inherit;
+        color: $primaryColor;
+        border: 2px solid $primaryColor;
         cursor: pointer;
         font-size: 2rem;
         margin-top: 50px;
+
+        &:hover, &:focus {
+            background: $primaryColor;
+            color: $secondaryColor;
+        }
     }
 }
 
 input {
-    background-color: $secondaryColor;
+    background-color: inherit;
     border: none;
     color: $primaryColor;
     font-size: 2rem;
-
+    border-bottom: 1px $primaryColor solid;
 
     &::placeholder {
         color: $primaryColor;
     }
 }
 
+details {
 
+    .fa-sort-down {
+        display: none;
+    }
 
-.wrapper {
-    max-width: 1080px;
-    width: 80%;
-    margin: 0 auto;
+    .fa-sort-down, .fa-caret-right {
+        padding-right: 10px;
+    }
+
+    &[open] {
+        .fa-caret-right {
+            display: none;
+        }
+
+        .fa-sort-down {
+            display: inline-block;
+        }
+    }
 }
+
+
 
 header, body {
     text-align: center;
@@ -76,7 +145,10 @@ ul {
     list-style: none;
 }
 
-footer {
+.footerContainer {
     background: black;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
 }
 
