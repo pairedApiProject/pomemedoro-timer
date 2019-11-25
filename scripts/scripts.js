@@ -39,6 +39,8 @@ app.breakMinus = $('#breakMinus');
 
 app.gifButtons = $('.buttonContainer button');
 
+app.gifContainer = $('.gifContainer');
+
 app.apiKey = 'k7mCxvFuj9fH4f1oknjhDcLF11W7hyhF';
 
 app.minutes = 0;
@@ -73,7 +75,7 @@ app.callGiphyAPI = searchTerm => {
 };
 
 app.appendGif = (gif) => {
-    $('.gifContainer').html(`<img src=${gif.url}>`);
+    app.gifContainer.html(`<img src=${gif.url}>`);
 };
 
 app.filterGif = (gifObject) => {
@@ -207,12 +209,18 @@ app.resetTimer = () => {
 app.toggleGifAndButtons = () => {
     if (app.isWorkTime) {
         app.gifButtons.toggle();
-        $('.gifContainer').empty();
+        app.gifContainer.empty();
     }
 
     if (!(app.isWorkTime)) {
         app.gifButtons.toggle();
         app.callGiphyAPI();
+        $('html, body').stop().animate({
+            scrollTop: ($('.gifContainer').offset().top)
+        }, 500, () => {
+            app.gifContainer.focus();
+        });
+
     }
 };
 
