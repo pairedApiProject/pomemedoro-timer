@@ -5,6 +5,7 @@
 
 $primaryColor: #ecf0f1;
 $secondaryColor: #362f36;
+$errorMessageBackground: #FF0000;
 
 // change secondary color based on background
 
@@ -43,11 +44,15 @@ body {
     font-family: 'Oswald', sans-serif;
     color: $primaryColor;
     font-size: 2rem;
+    height: auto;
     width: 100%;
-    height: 100vh;
     background: linear-gradient(-45deg, #4c5b5c, #230c33, #4f000b, #221d23);
     background-size: 400% 400%;
     animation: backgroundGradient 10s ease infinite;
+}
+
+.tasksToComplete {
+    padding: 20px;
 }
 
 @keyframes backgroundGradient {
@@ -78,10 +83,6 @@ a {
     color: inherit;
 }
 
-
-
-
-
 .buttonContainer {
 
     button{
@@ -93,13 +94,27 @@ a {
         border: 2px solid $primaryColor;
         cursor: pointer;
         font-size: 2rem;
-        margin-top: 50px;
+        margin: 10px 5px;
 
         &:hover, &:focus {
             background: $primaryColor;
             color: $secondaryColor;
         }
     }
+}
+
+.error {
+    animation: sweep .5s ease-in-out;
+    border: 2px solid #ecf0f1;
+    border-radius: 10px;
+    padding: 10px;
+    margin: 15px 0;
+    background: darken($errorMessageBackground, 20%);
+}
+
+.gifContainer {
+    height: auto;
+    margin: 20px 0;
 }
 
 input {
@@ -111,27 +126,26 @@ input {
 
     &::placeholder {
         color: $primaryColor;
+        font-weight: 200;
     }
 }
 
 details {
-
-    .fa-sort-down {
-        display: none;
-    }
-
-    .fa-sort-down, .fa-caret-right {
-        padding-right: 10px;
-    }
-
     &[open] {
-        .fa-caret-right {
-            display: none;
+        ol {
+            animation: sweep .5s ease-in-out;
+            font-weight: 200;
+            text-align: left;
+            margin: 0 20px;
+            li {
+                margin: 20px 0;
+            }
         }
+    }
 
-        .fa-sort-down {
-            display: inline-block;
-        }
+    @keyframes sweep {
+        0%    {opacity: 0; margin-left: -10px}
+        100%  {opacity: 1; margin-left: 0px}
     }
 }
 
@@ -143,12 +157,30 @@ header, body {
 
 ul {
     list-style: none;
+    width: 90%;
+    text-align: left;
+    margin: 0 auto;
+    @include mq-tablet {
+        width: 65%;
+    }
+    li {
+        padding: 10px;
+        font-weight: 200;
+        input[type=checkbox] {
+            vertical-align: middle;
+            position: relative;
+            bottom: 2px;
+            margin-right: 15px;
+        }
+    }
 }
 
-.footerContainer {
-    background: black;
-    position: fixed;
-    bottom: 0;
-    width: 100%;
+footer {
+    margin-top: 20px;
+    .footerContainer {
+        background: black;
+        bottom: 0;
+        width: 100%;
+        padding: 20px 0;
+    }
 }
-

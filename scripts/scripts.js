@@ -101,8 +101,9 @@ app.listenForGifTag = () => {
 
 app.insertErrorMessage = () => {
     const $errorMessage = "<p class='error' role='alert' tabindex='0'>You can only have 5 tasks to complete at a time. Please mark one as complete to remove it from the list</p>";
-
-    $('label[for=userTask]').after($errorMessage);
+    if ($('.error').length === 0) {
+        $('label[for=userTask]').after($errorMessage);
+    }
 };
 
 app.userTaskList = () => {
@@ -136,7 +137,7 @@ app.appendNewTasksFromFirebase = () => {
         const userTaskArray = [];
 
         for (let userTask in userTaskData) {
-          userTaskArray.push(`<li data-key=${userTask}><span class='fa fa-square-o'></span>${userTaskData[userTask].description}</li>`);
+          userTaskArray.push(`<li data-key=${userTask}><input type='checkbox' id=${userTask} tabindex="0"><label for=${userTask} tabindex="0">${userTaskData[userTask].description}</label></li>`);
         };
 
         $('ul').empty();
@@ -157,7 +158,7 @@ app.appendExistingTasksFromFireBase = () => {
         const userTaskArray = [];
 
         for (let userTask in userTaskData) {
-            userTaskArray.push(`<li data-key=${userTask}><span class='fa fa-square-o'></span>${userTaskData[userTask].description}</li>`);
+            userTaskArray.push(`<li data-key=${userTask}><input type='checkbox' id=${userTask} tabindex="0"><label for=${userTask} tabindex="0">${userTaskData[userTask].description}</label></li>`);
         };
 
         userTaskArray.forEach(task => {
@@ -168,9 +169,6 @@ app.appendExistingTasksFromFireBase = () => {
 
 app.taskClickListener  = () => {             
     $('ul').on('click', 'li', function() {
-        const $checkBox = $(this).find('.fa');
-
-        $checkBox.toggleClass('fa-square-o fa-check-square-o');
         $(this).toggleClass('taskComplete');
 
         if ($(this).hasClass('taskComplete')) {
@@ -190,7 +188,7 @@ app.startTimer = () => {
         app.isPaused = !(app.isPaused);
         
         if (!(app.isPaused)) {
-            app.countdown = setInterval(app.timerCountdown, 1000);
+            app.countdown = setInterval(app.timerCountdown, 10);
         }
     })    
 };
@@ -233,7 +231,7 @@ app.timerCountdown = () => {
         clearInterval(app.countdown);
         app.seconds = (app.isWorkTime ? app.breakTime : app.workTime) * 60;
         app.isWorkTime = !(app.isWorkTime);
-        app.countdown = setInterval(app.timerCountdown, 1000);
+        app.countdown = setInterval(app.timerCountdown, 10);
         app.toggleGifAndButtons();
     }
 };
@@ -302,7 +300,7 @@ app.init = () => {
     app.startTimer();
     app.resetTimer();
     app.gifButtons.toggle();
-    setInterval(app.updateTimerHTML, 1000);
+    setInterval(app.updateTimerHTML, 10);
 };
 
 $(document).ready( () => {
