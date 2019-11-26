@@ -188,7 +188,7 @@ app.startTimer = () => {
         app.isPaused = !(app.isPaused);
         
         if (!(app.isPaused)) {
-            app.countdown = setInterval(app.timerCountdown, 10);
+            app.countdown = setInterval(app.timerCountdown, 1000);
         }
     })    
 };
@@ -231,7 +231,7 @@ app.timerCountdown = () => {
         clearInterval(app.countdown);
         app.seconds = (app.isWorkTime ? app.breakTime : app.workTime) * 60;
         app.isWorkTime = !(app.isWorkTime);
-        app.countdown = setInterval(app.timerCountdown, 10);
+        app.countdown = setInterval(app.timerCountdown, 1000);
         app.toggleGifAndButtons();
     }
 };
@@ -300,7 +300,7 @@ app.init = () => {
     app.startTimer();
     app.resetTimer();
     app.gifButtons.toggle();
-    setInterval(app.updateTimerHTML, 10);
+    setInterval(app.updateTimerHTML, 1000);
 };
 
 $(document).ready( () => {
