@@ -113,7 +113,9 @@ ul {
 
 footer {
     margin-top: 20px;
-    min-height: 10vh;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
     .footerContainer {
         background: black;
         width: 100%;
@@ -123,6 +125,7 @@ footer {
 
 .wrapper {
     min-height: 90vh;
+    padding-bottom: 120px; 
     @include mq-mobile {
         width: 80%;
         margin: 0 auto;
