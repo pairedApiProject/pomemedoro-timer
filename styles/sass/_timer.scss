@@ -21,9 +21,7 @@
     }
 
     .timerDisplay {
-        @include mq-mobile {
-            font-size: 3rem;
-        }
+            font-size: 4rem;
 
         @include mq-tablet {
             font-size: 5rem;

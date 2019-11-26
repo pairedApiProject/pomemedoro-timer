@@ -16,6 +16,11 @@ header, body {
     text-align: center;
 }
 
+img {
+    max-width: 100%;
+    display: block;
+}
+
 body {
     font-family: 'Oswald', sans-serif;
     color: $primaryColor;
@@ -29,11 +34,9 @@ body {
 
 header {
     h1 {
-        @include mq-mobile {
-            padding: 30px 0;
-            img {
-                display: none;
-            }
+        padding: 30px 0;
+        img {
+            display: none;
         }
         @include mq-tablet {
             .secondTomato {
@@ -56,10 +59,6 @@ a {
     color: inherit;
 }
 
-label {
-    word-break: break-all;
-}
-
 input {
     background-color: inherit;
     border: none;
@@ -73,6 +72,7 @@ input {
 }
 
 details {
+    cursor: pointer;
     &[open] {
         ol {
             animation: sweep .5s ease-in-out;
@@ -87,6 +87,7 @@ details {
 
     @keyframes sweep {
         0%    {opacity: 0; margin-left: -10px}
+        50%   {opacity: 0.5; margin-left: -5px}
         100%  {opacity: 1; margin-left: 0px}
     }
 }
@@ -99,6 +100,11 @@ ul {
     @include mq-tablet {
         width: 65%;
     }
+
+    label {
+        word-break: break-all;
+    }
+
     li {
         padding: 10px;
         font-weight: 200;
@@ -113,23 +119,21 @@ ul {
 
 footer {
     margin-top: 20px;
-    position: fixed;
+    position: static;
     bottom: 0;
     width: 100%;
     .footerContainer {
         background: black;
-        width: 100%;
+        // width: 100%;
         padding: 20px 0;
     }
 }
 
 .wrapper {
     min-height: 90vh;
-    padding-bottom: 120px; 
-    @include mq-mobile {
-        width: 80%;
-        margin: 0 auto;
-    }
+    padding-bottom: 20px; 
+    width: 80%;
+    margin: 0 auto;
 
     @include mq-tablet {
         width: 90%;
@@ -191,4 +195,6 @@ footer {
 .gifContainer {
     height: auto;
     margin: 20px 0;
+    display: flex;
+    justify-content: center;
 }
