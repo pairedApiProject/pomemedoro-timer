@@ -507,6 +507,10 @@ footer .footerContainer {
   margin: 20px 0;
 }
 
+.timerSettings .pomoTimers.pomoStart {
+  width: 270px;
+}
+
 .timerSettings button {
   text-transform: uppercase;
   padding: 0 15px;
@@ -526,6 +530,7 @@ footer .footerContainer {
 .timerSettings button.pomoButtonStart {
   background-color: green;
   margin-right: 10px;
+  width: 127px;
 }
 
 .timerSettings button.pomoButtonStart:hover, .timerSettings button.pomoButtonStart:focus {

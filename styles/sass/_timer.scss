@@ -34,6 +34,9 @@
 
     .pomoTimers {
         margin: 20px 0;
+        &.pomoStart {
+            width: 270px;
+        }
     }
     
     button {
@@ -54,6 +57,7 @@
         &.pomoButtonStart {
             background-color: green;
             margin-right: 10px;
+            width: 127px;
 
             &:hover, &:focus {
                 background-color: lighten(green, 70%);
